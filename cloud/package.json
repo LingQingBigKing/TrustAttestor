@@ -1,0 +1,36 @@
+{
+  "name": "trustattestor-cloud",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "generate-types": "wrangler types --include-runtime false --strict-vars false",
+    "check:bindings": "wrangler types --include-runtime false --strict-vars false --check",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "pnpm run check:bindings && pnpm run typecheck && pnpm run test && pnpm run test:baseline && pnpm run test:candidate && pnpm run test:domestic-catalog && pnpm run test:sources",
+    "deploy:dry-run": "wrangler deploy --dry-run",
+    "blacklist:sql": "node scripts/build-blacklist-sql.mjs",
+    "blacklist:update": "node scripts/update-keybox-blacklist.mjs",
+    "catalog:sql": "python scripts/build-device-catalog-sql.py",
+    "baseline:sql": "python scripts/build-device-baselines-sql.py",
+    "candidate:sql": "python scripts/build-baseline-candidates-sql.py",
+    "sources:aggregate": "python scripts/aggregate-public-device-data.py",
+    "domestic-catalog:sql": "python scripts/build-domestic-device-candidates-sql.py",
+    "test:baseline": "python -m unittest discover -s test -p \"test_build_device_baselines_sql.py\"",
+    "test:candidate": "python -m unittest discover -s test -p \"test_build_baseline_candidates_sql.py\"",
+    "test:domestic-catalog": "python -m unittest discover -s test -p \"test_build_domestic_device_candidates_sql.py\"",
+    "test:sources": "python -m unittest discover -s test -p \"test_aggregate_public_device_data.py\""
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260823.1",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "wrangler": "^4.30.0"
+  },
+  "packageManager": "pnpm@11.19.0"
+}

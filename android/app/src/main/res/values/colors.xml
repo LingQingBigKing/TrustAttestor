@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ta_background">#FFF8FAFC</color>
+    <color name="ta_surface">#FFFFFFFF</color>
+    <color name="ta_card_tint">#FFF8FAFC</color>
+    <color name="ta_text">#FF0F172A</color>
+    <color name="ta_text_secondary">#FF334155</color>
+    <color name="ta_subtext">#FF64748B</color>
+    <color name="ta_telemetry_key">#FF94A3B8</color>
+    <color name="ta_telemetry_value">#FF1E293B</color>
+    <color name="ta_primary">#FF0D9488</color>
+    <color name="ta_primary_soft">#FFF0FDFA</color>
+    <color name="ta_stroke">#FFE2E8F0</color>
+    <color name="ta_stroke_strong">#FFCBD5E1</color>
+    <color name="ta_divider">#FFE2E8F0</color>
+    <color name="ta_success">#FF0D9488</color>
+    <color name="ta_success_soft">#FFECFDF5</color>
+    <color name="ta_error">#FFE11D48</color>
+    <color name="ta_error_soft">#FFFFF1F2</color>
+    <color name="ta_idle">#FF64748B</color>
+    <color name="ta_running">#FF0F766E</color>
+    <color name="ta_cloud">#FF2563EB</color>
+    <color name="ta_warning">#FFD97706</color>
+    <color name="bottom_nav_checked">#FF0D9488</color>
+    <color name="bottom_nav_unchecked">#FF64748B</color>
+</resources>

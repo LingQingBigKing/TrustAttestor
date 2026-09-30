@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.TrustAttestor" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/bg_screen</item>
+        <item name="colorPrimary">@color/ta_primary</item>
+        <item name="colorSurface">@color/ta_surface</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
+    </style>
+
+    <style name="Theme.TrustAttestor.Starting" parent="Theme.TrustAttestor">
+        <item name="android:windowBackground">@drawable/bg_launch</item>
+    </style>
+
+    <style name="TA.BottomNav.ActiveIndicator" parent="">
+        <item name="android:color">@android:color/transparent</item>
+        <item name="shapeAppearance">@style/TA.BottomNav.ActiveIndicator.Shape</item>
+    </style>
+
+    <style name="TA.BottomNav.ActiveIndicator.Shape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
+    </style>
+</resources>

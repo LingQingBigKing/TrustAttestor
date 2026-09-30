@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="6dp">
+
+    <LinearLayout
+        android:id="@+id/acknowledgementsCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_agreement_dialog"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/acknowledgements_title"
+                    android:textColor="@color/ta_text"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/acknowledgements_subtitle"
+                    android:textColor="@color/ta_subtext"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAcknowledgementsClose"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@color/ta_surface"
+                android:contentDescription="@string/acknowledgements_close"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:padding="12dp"
+                android:text=""
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_close"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="20dp"
+                app:iconTint="@color/ta_text_secondary"
+                app:rippleColor="@color/ta_primary_soft"
+                app:strokeColor="@color/ta_stroke"
+                app:strokeWidth="1dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="14dp"
+            android:background="@color/ta_divider" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/acknowledgementsPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_weight="1"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:overScrollMode="never" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/acknowledgements_swipe_hint"
+            android:textColor="@color/ta_subtext"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAcknowledgementsPrevious"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/ta_surface"
+                android:contentDescription="@string/acknowledgements_previous"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:padding="12dp"
+                android:text=""
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_chevron_left"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="22dp"
+                app:iconTint="@color/ta_primary"
+                app:rippleColor="@color/ta_primary_soft"
+                app:strokeColor="@color/ta_stroke_strong"
+                app:strokeWidth="1dp" />
+
+            <TextView
+                android:id="@+id/tvAcknowledgementsCounter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:text="@string/acknowledgements_counter_preview"
+                android:textColor="@color/ta_text_secondary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAcknowledgementsNext"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/ta_surface"
+                android:contentDescription="@string/acknowledgements_next"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:padding="12dp"
+                android:text=""
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_chevron_right"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="22dp"
+                app:iconTint="@color/ta_primary"
+                app:rippleColor="@color/ta_primary_soft"
+                app:strokeColor="@color/ta_stroke_strong"
+                app:strokeWidth="1dp" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,37 @@
+.DS_Store
+
+# Android/Gradle generated state
+**/.gradle/
+**/.kotlin/
+**/.idea/
+**/build/
+**/.cxx/
+**/local.properties
+**/keystore.properties
+**/.pnpm-store/
+
+# Credentials, private keys and deployment state
+**/.dev.vars*
+**/.env
+**/.env.*
+**/*.jks
+**/*.keystore
+**/*.p12
+**/*.pfx
+
+# Generated DEX, mappings and local logs
+**/classes.dex
+**/mappings/
+**/skidfuscator*.log
+**/skidfuscator-error-*.txt
+**/*.bak
+
+# Workspace-only leftovers
+/_ksu_src_*/
+/.codex-*/
+/.adb/
+/.android/
+/.android-local/
+/.gradle-local/
+/analytics.settings
+/skidfuscator.log

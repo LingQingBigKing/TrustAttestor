@@ -1,0 +1,677 @@
+{
+  "schema": "trustattestor.baseline-candidates/v1",
+  "datasetId": "domestic-mainstream-2026-08",
+  "region": "CN",
+  "collectedAt": "2026-08-23",
+  "policy": "CANDIDATE_ONLY",
+  "catalogs": {
+    "devicesDbSha256": "f63718a8c3582f4b3cfc68054ac141ce40d0157e0ccd3283bf13d3fc33da7058",
+    "socsJsonSha256": "9e677613ec046c62804671b4d9e40bac32e5c691c7e297b8a6827f4ebfffaaae"
+  },
+  "sources": [
+    {
+      "sourceId": "device-catalog",
+      "authority": "REFERENCE_CATALOG",
+      "uri": "catalog://devices.db",
+      "title": "设备识别字典 devices.db"
+    },
+    {
+      "sourceId": "xiaomi-kernel-index",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/README/README.md?plain=1",
+      "title": "Xiaomi Kernel OpenSource device and branch index"
+    },
+    {
+      "sourceId": "xiaomi-17-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/MiCode/Xiaomi_Kernel_OpenSource/popsicle-w-oss/Makefile",
+      "title": "Xiaomi 17 series kernel Makefile"
+    },
+    {
+      "sourceId": "xiaomi-dada-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/MiCode/Xiaomi_Kernel_OpenSource/dada-v-oss/Makefile",
+      "title": "Xiaomi 15 series kernel Makefile"
+    },
+    {
+      "sourceId": "xiaomi-xuanyuan-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/MiCode/Xiaomi_Kernel_OpenSource/xuanyuan-v-oss/Makefile",
+      "title": "Xiaomi 15 Ultra kernel Makefile"
+    },
+    {
+      "sourceId": "xiaomi-zorn-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/MiCode/Xiaomi_Kernel_OpenSource/bsp-zorn-v-oss/Makefile",
+      "title": "REDMI K80 kernel Makefile"
+    },
+    {
+      "sourceId": "xiaomi-miro-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/MiCode/Xiaomi_Kernel_OpenSource/bsp-miro-v-oss/Makefile",
+      "title": "REDMI K80 Pro kernel Makefile"
+    },
+    {
+      "sourceId": "xiaomi-annibale-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/MiCode/Xiaomi_Kernel_OpenSource/annibale-w-oss/Makefile",
+      "title": "REDMI K90 kernel Makefile"
+    },
+    {
+      "sourceId": "xiaomi-15-specs",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.mi.com/global/product/xiaomi-15/specs/",
+      "title": "Xiaomi 15 official specifications"
+    },
+    {
+      "sourceId": "xiaomi-15-ultra-specs",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.mi.com/global/product/xiaomi-15-ultra/specs/",
+      "title": "Xiaomi 15 Ultra official specifications"
+    },
+    {
+      "sourceId": "xiaomi-17-specs",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.mi.com/global/product/xiaomi-17/",
+      "title": "Xiaomi 17 official specifications"
+    },
+    {
+      "sourceId": "oneplus-15-product",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.oneplus.com/cn/15",
+      "title": "OnePlus 15 official product page"
+    },
+    {
+      "sourceId": "oneplus-15-manifest",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/OnePlusOSS/kernel_manifest/oneplus/sm8850/oneplus_15.xml",
+      "title": "OnePlus 15 official kernel manifest"
+    },
+    {
+      "sourceId": "oneplus-15-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/OnePlusOSS/android_kernel_common_oneplus_sm8850/oneplus/sm8850_b_16.0.0_oneplus_15/Makefile",
+      "title": "OnePlus 15 kernel Makefile"
+    },
+    {
+      "sourceId": "oneplus-13-product",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.oneplus.com/cn/13",
+      "title": "OnePlus 13 official product page"
+    },
+    {
+      "sourceId": "oneplus-13-manifest",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/OnePlusOSS/kernel_manifest/oneplus/sm8750/oneplus_13.xml",
+      "title": "OnePlus 13 official kernel manifest"
+    },
+    {
+      "sourceId": "oneplus-13-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/OnePlusOSS/android_kernel_common_oneplus_sm8750/oneplus/sm8750_v_15.0.0_oneplus_13/Makefile",
+      "title": "OnePlus 13 kernel Makefile"
+    },
+    {
+      "sourceId": "oneplus-12-specs",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.oneplus.com/cn/12/specs",
+      "title": "OnePlus 12 official specifications"
+    },
+    {
+      "sourceId": "oneplus-12-manifest",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/OnePlusOSS/kernel_manifest/oneplus/sm8650/oneplus_12_v.xml",
+      "title": "OnePlus 12 official kernel manifest"
+    },
+    {
+      "sourceId": "oneplus-12-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/OnePlusOSS/android_kernel_common_oneplus_sm8650/oneplus/sm8650_v_15.0.0_oneplus12/Makefile",
+      "title": "OnePlus 12 kernel Makefile"
+    },
+    {
+      "sourceId": "realme-security",
+      "authority": "OEM_SECURITY_BULLETIN",
+      "uri": "https://privacy.realme.com/cn/security?inviteId=719266686",
+      "title": "realme Android security update model list"
+    },
+    {
+      "sourceId": "realme-gt8-pro-product",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.realme.com/cn/realme-gt-8-pro",
+      "title": "realme GT8 Pro official product page"
+    },
+    {
+      "sourceId": "realme-gt8-pro-kernel",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://github.com/realme-kernel-opensource/realme_GT8pro-AndroidB-kernel-source",
+      "title": "realme GT8 Pro official kernel source"
+    },
+    {
+      "sourceId": "realme-gt8-product",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.realme.com/cn/realme-gt-8/specs",
+      "title": "realme GT8 official specifications"
+    },
+    {
+      "sourceId": "realme-gt8-kernel",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://github.com/realme-kernel-opensource/realme_GT8-AndroidB-kernel-source",
+      "title": "realme GT8 official kernel source"
+    },
+    {
+      "sourceId": "realme-gt7-pro-product",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.realme.com/cn/realme-gt-7-pro",
+      "title": "realme GT7 Pro official product page"
+    },
+    {
+      "sourceId": "realme-gt7-product",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.realme.com/cn/realme-gt-7",
+      "title": "realme GT7 official product page"
+    },
+    {
+      "sourceId": "realme-gt7-kernel",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://github.com/realme-kernel-opensource/realme_gt7-AndroidB-kernel-source",
+      "title": "realme GT7 official kernel source"
+    },
+    {
+      "sourceId": "realme-gt7-makefile",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://raw.githubusercontent.com/realme-kernel-opensource/realme_gt7-AndroidB-kernel-source/master/Makefile",
+      "title": "realme GT7 kernel Makefile"
+    },
+    {
+      "sourceId": "realme-gt6-product",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://www.realme.com/cn/realme-gt-6",
+      "title": "realme GT6 official product page"
+    }
+  ],
+  "records": [
+    {
+      "candidateId": "cn-xiaomi-17-25113pn0ec",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "Xiaomi",
+        "marketingName": "Xiaomi 17",
+        "device": "pudding",
+        "model": "25113PN0EC",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8850",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "W",
+        "kernelFamily": "6.11"
+      },
+      "evidence": {
+        "oem": ["xiaomi-kernel-index"],
+        "marketingName": ["xiaomi-17-specs", "xiaomi-kernel-index"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["xiaomi-kernel-index"],
+        "kernelAndroidGeneration": ["xiaomi-kernel-index"],
+        "kernelFamily": ["xiaomi-17-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-xiaomi-17-pro-25098pn5ac",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "Xiaomi",
+        "marketingName": "Xiaomi 17 Pro",
+        "device": "pandora",
+        "model": "25098PN5AC",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8850",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "W",
+        "kernelFamily": "6.11"
+      },
+      "evidence": {
+        "oem": ["xiaomi-kernel-index"],
+        "marketingName": ["xiaomi-kernel-index"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["xiaomi-kernel-index"],
+        "kernelAndroidGeneration": ["xiaomi-kernel-index"],
+        "kernelFamily": ["xiaomi-17-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-xiaomi-17-pro-max-2509fpn0bc",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "Xiaomi",
+        "marketingName": "Xiaomi 17 Pro Max",
+        "device": "popsicle",
+        "model": "2509FPN0BC",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8850",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "W",
+        "kernelFamily": "6.11"
+      },
+      "evidence": {
+        "oem": ["xiaomi-kernel-index"],
+        "marketingName": ["xiaomi-kernel-index"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["xiaomi-kernel-index"],
+        "kernelAndroidGeneration": ["xiaomi-kernel-index"],
+        "kernelFamily": ["xiaomi-17-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-xiaomi-15-24129pn74c",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "Xiaomi",
+        "marketingName": "Xiaomi 15",
+        "device": "dada",
+        "model": "24129PN74C",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8750",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "V",
+        "kernelFamily": "6.6"
+      },
+      "evidence": {
+        "oem": ["xiaomi-kernel-index"],
+        "marketingName": ["xiaomi-15-specs", "xiaomi-kernel-index"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["xiaomi-15-specs"],
+        "kernelAndroidGeneration": ["xiaomi-kernel-index"],
+        "kernelFamily": ["xiaomi-dada-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-xiaomi-15-pro-2410dpn6cc",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "Xiaomi",
+        "marketingName": "Xiaomi 15 Pro",
+        "device": "haotian",
+        "model": "2410DPN6CC",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "V",
+        "kernelFamily": "6.6"
+      },
+      "evidence": {
+        "oem": ["xiaomi-kernel-index"],
+        "marketingName": ["xiaomi-kernel-index"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "kernelAndroidGeneration": ["xiaomi-kernel-index"],
+        "kernelFamily": ["xiaomi-dada-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-xiaomi-15-ultra-25010pn30c",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "Xiaomi",
+        "marketingName": "Xiaomi 15 Ultra",
+        "device": "xuanyuan",
+        "model": "25010PN30C",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8750",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "V",
+        "kernelFamily": "6.6"
+      },
+      "evidence": {
+        "oem": ["xiaomi-kernel-index"],
+        "marketingName": ["xiaomi-15-ultra-specs", "xiaomi-kernel-index"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["xiaomi-15-ultra-specs", "xiaomi-kernel-index"],
+        "kernelAndroidGeneration": ["xiaomi-kernel-index"],
+        "kernelFamily": ["xiaomi-xuanyuan-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-redmi-k80-24117rk2cc",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "Xiaomi",
+        "marketingName": "REDMI K80",
+        "device": "zorn",
+        "model": "24117RK2CC",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "V",
+        "kernelFamily": "6.1"
+      },
+      "evidence": {
+        "oem": ["xiaomi-kernel-index"],
+        "marketingName": ["xiaomi-kernel-index"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "kernelAndroidGeneration": ["xiaomi-kernel-index"],
+        "kernelFamily": ["xiaomi-zorn-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-redmi-k80-pro-24122rkc7c",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "Xiaomi",
+        "marketingName": "REDMI K80 Pro",
+        "device": "miro",
+        "model": "24122RKC7C",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "V",
+        "kernelFamily": "6.6"
+      },
+      "evidence": {
+        "oem": ["xiaomi-kernel-index"],
+        "marketingName": ["xiaomi-kernel-index"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "kernelAndroidGeneration": ["xiaomi-kernel-index"],
+        "kernelFamily": ["xiaomi-miro-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-redmi-k90-2510drk44c",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "Xiaomi",
+        "marketingName": "REDMI K90",
+        "device": "annibale",
+        "model": "2510DRK44C",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "W",
+        "kernelFamily": "6.6"
+      },
+      "evidence": {
+        "oem": ["xiaomi-kernel-index"],
+        "marketingName": ["xiaomi-kernel-index"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "kernelAndroidGeneration": ["xiaomi-kernel-index"],
+        "kernelFamily": ["xiaomi-annibale-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-oneplus-15-plk110",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "OnePlus",
+        "marketingName": "OnePlus 15",
+        "device": "OP60FFL1",
+        "model": "PLK110",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8850",
+        "launchAndroidRelease": "16",
+        "kernelAndroidGeneration": "Android 16",
+        "kernelFamily": "6.12"
+      },
+      "evidence": {
+        "oem": ["oneplus-15-product"],
+        "marketingName": ["oneplus-15-product"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["oneplus-15-manifest"],
+        "launchAndroidRelease": ["oneplus-15-manifest"],
+        "kernelAndroidGeneration": ["oneplus-15-manifest"],
+        "kernelFamily": ["oneplus-15-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-oneplus-13-pjz110",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "OnePlus",
+        "marketingName": "OnePlus 13",
+        "device": "OP5D0DL1",
+        "model": "PJZ110",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8750",
+        "launchAndroidRelease": "15",
+        "kernelAndroidGeneration": "Android 15",
+        "kernelFamily": "6.6"
+      },
+      "evidence": {
+        "oem": ["oneplus-13-product"],
+        "marketingName": ["oneplus-13-product"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["oneplus-13-manifest"],
+        "launchAndroidRelease": ["oneplus-13-manifest"],
+        "kernelAndroidGeneration": ["oneplus-13-manifest"],
+        "kernelFamily": ["oneplus-13-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-oneplus-12-pjd110",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "OnePlus",
+        "marketingName": "OnePlus 12",
+        "device": "OP5929L1",
+        "model": "PJD110",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8650",
+        "launchAndroidRelease": "14",
+        "kernelAndroidGeneration": "Android 15",
+        "kernelFamily": "6.1"
+      },
+      "evidence": {
+        "oem": ["oneplus-12-specs"],
+        "marketingName": ["oneplus-12-specs"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["oneplus-12-manifest", "oneplus-12-specs"],
+        "launchAndroidRelease": ["oneplus-12-specs"],
+        "kernelAndroidGeneration": ["oneplus-12-manifest"],
+        "kernelFamily": ["oneplus-12-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-realme-gt8-pro-rmx5210",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "realme",
+        "marketingName": "真我 GT8 Pro",
+        "device": "",
+        "model": "RMX5210",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8850",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "AndroidB",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["realme-gt8-pro-product"],
+        "marketingName": ["realme-gt8-pro-product", "realme-security"],
+        "model": ["realme-security"],
+        "socAlias": ["realme-gt8-pro-product"],
+        "kernelAndroidGeneration": ["realme-gt8-pro-kernel"]
+      }
+    },
+    {
+      "candidateId": "cn-realme-gt8-rmx6699",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "realme",
+        "marketingName": "真我 GT8",
+        "device": "",
+        "model": "RMX6699",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8750",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "AndroidB",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["realme-gt8-product"],
+        "marketingName": ["realme-gt8-product", "realme-security"],
+        "model": ["realme-security"],
+        "socAlias": ["realme-gt8-product"],
+        "kernelAndroidGeneration": ["realme-gt8-kernel"]
+      }
+    },
+    {
+      "candidateId": "cn-realme-gt7-pro-rmx5010",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "realme",
+        "marketingName": "真我 GT7 Pro",
+        "device": "",
+        "model": "RMX5010",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8750",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["realme-gt7-pro-product"],
+        "marketingName": ["realme-gt7-pro-product", "realme-security"],
+        "model": ["realme-security"],
+        "socAlias": ["realme-gt7-pro-product"]
+      }
+    },
+    {
+      "candidateId": "cn-realme-gt7-rmx6688",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "realme",
+        "marketingName": "真我 GT7",
+        "device": "",
+        "model": "RMX6688",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "MT6991Z/TCZB",
+        "launchAndroidRelease": "15",
+        "kernelAndroidGeneration": "AndroidB",
+        "kernelFamily": "6.6"
+      },
+      "evidence": {
+        "oem": ["realme-gt7-product"],
+        "marketingName": ["realme-gt7-product", "realme-security"],
+        "model": ["realme-security"],
+        "socAlias": ["realme-gt7-product"],
+        "launchAndroidRelease": ["realme-gt7-product"],
+        "kernelAndroidGeneration": ["realme-gt7-kernel"],
+        "kernelFamily": ["realme-gt7-makefile"]
+      }
+    },
+    {
+      "candidateId": "cn-realme-gt6-rmx3800",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "CN",
+      "values": {
+        "oem": "realme",
+        "marketingName": "真我 GT6",
+        "device": "",
+        "model": "RMX3800",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8650",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["realme-gt6-product"],
+        "marketingName": ["realme-gt6-product", "realme-security"],
+        "model": ["realme-security"],
+        "socAlias": ["realme-gt6-product"]
+      }
+    }
+  ]
+}

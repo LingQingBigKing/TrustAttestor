@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/aboutScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingBottom="8dp"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:id="@+id/aboutHeroCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_about_section"
+            android:elevation="0dp"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/about_project_section"
+                android:textColor="@color/ta_text"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="9dp"
+                android:background="@color/ta_divider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:fontFamily="monospace"
+                android:text="@string/app_name"
+                android:textColor="@color/ta_text"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="monospace"
+                android:lineSpacingExtra="2dp"
+                android:text="@string/about_project_description"
+                android:textColor="@color/ta_subtext"
+                android:textSize="10sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="76dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="@string/about_author_label"
+                        android:textColor="@color/ta_telemetry_key"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:text="@string/about_author_value"
+                        android:textColor="@color/ta_telemetry_value"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rowRepo"
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="76dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="@string/about_repo_label"
+                        android:textColor="@color/ta_telemetry_key"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvRepoValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:fontFamily="monospace"
+                        android:maxLines="1"
+                        android:text="LingQingBigKing/TrustAttestor"
+                        android:textColor="@color/ta_text_secondary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:gravity="center"
+                        android:text="›"
+                        android:textColor="@color/ta_subtext"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rowContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="76dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="@string/about_contact_label"
+                        android:textColor="@color/ta_telemetry_key"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvContactValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:maxLines="1"
+                        android:text="ling_qing_lq@163.com"
+                        android:textColor="@color/ta_text_secondary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:gravity="center"
+                        android:text="›"
+                        android:textColor="@color/ta_subtext"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/languageCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_about_section"
+            android:elevation="0dp"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/language_section_title"
+                android:textColor="@color/ta_text"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="9dp"
+                android:background="@color/ta_divider" />
+
+            <LinearLayout
+                android:id="@+id/rowLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/language_interface_label"
+                        android:textColor="@color/ta_text_secondary"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/language_change_hint"
+                        android:textColor="@color/ta_subtext"
+                        android:textSize="9sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvLanguageValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="monospace"
+                    android:text="@string/language_follow_system"
+                    android:textColor="@color/ta_primary"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:text="›"
+                    android:textColor="@color/ta_subtext"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/revocationCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_about_section"
+            android:elevation="0dp"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/about_revocation_section"
+                android:textColor="@color/ta_text"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="9dp"
+                android:background="@color/ta_divider" />
+
+            <TextView
+                android:id="@+id/tvRevocationStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:fontFamily="monospace"
+                android:text="@string/about_revocation_ready"
+                android:textColor="@color/ta_success"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvRevocationListTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="monospace"
+                android:text="@string/about_revocation_updated_default"
+                android:textColor="@color/ta_text_secondary"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tvRevocationCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="monospace"
+                android:text="@string/about_revocation_count_default"
+                android:textColor="@color/ta_text_secondary"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="monospace"
+                android:maxLines="1"
+                android:text="@string/about_revocation_source"
+                android:textColor="@color/ta_subtext"
+                android:textSize="10sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFetchRevocationList"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="14dp"
+                android:backgroundTint="@color/ta_primary_soft"
+                android:elevation="0dp"
+                android:fontFamily="monospace"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="42dp"
+                android:stateListAnimator="@null"
+                android:text="@string/about_revocation_sync_action"
+                android:textAllCaps="false"
+                android:textColor="@color/ta_primary"
+                android:textSize="10sp"
+                app:cornerRadius="4dp"
+                app:rippleColor="@color/ta_primary_soft"
+                app:strokeColor="@color/ta_primary"
+                app:strokeWidth="1dp" />
+
+            <ProgressBar
+                android:id="@+id/progressFetch"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thanksCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_about_section"
+            android:elevation="0dp"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/about_credits_section"
+                android:textColor="@color/ta_text"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="9dp"
+                android:background="@color/ta_divider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="monospace"
+                android:lineSpacingExtra="2dp"
+                android:text="@string/about_credits_intro"
+                android:textColor="@color/ta_subtext"
+                android:textSize="10sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAcknowledgements"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/ta_surface"
+                android:elevation="0dp"
+                android:fontFamily="monospace"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="42dp"
+                android:stateListAnimator="@null"
+                android:text="@string/about_credits_action"
+                android:textAllCaps="false"
+                android:textColor="@color/ta_primary"
+                android:textSize="10sp"
+                app:cornerRadius="4dp"
+                app:icon="@drawable/ic_arrow_forward"
+                app:iconGravity="textEnd"
+                app:iconPadding="8dp"
+                app:iconSize="16dp"
+                app:iconTint="@color/ta_primary"
+                app:rippleColor="@color/ta_primary_soft"
+                app:strokeColor="@color/ta_stroke_strong"
+                app:strokeWidth="1dp" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnUserAgreement"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/ta_surface"
+            android:elevation="0dp"
+            android:fontFamily="monospace"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minHeight="42dp"
+            android:stateListAnimator="@null"
+            android:text="@string/user_agreement"
+            android:textAllCaps="false"
+            android:textColor="@color/ta_text_secondary"
+            android:textSize="10sp"
+            app:cornerRadius="4dp"
+            app:rippleColor="@color/ta_primary_soft"
+            app:strokeColor="@color/ta_stroke_strong"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
+</ScrollView>

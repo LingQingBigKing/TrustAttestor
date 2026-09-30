@@ -1,0 +1,38 @@
+{
+  "schema": "trustattestor.source-aggregation/v1",
+  "datasetId": "global-public-sources-2026-08",
+  "region": "GLOBAL",
+  "collectedAt": "2026-08-29",
+  "policy": "CANDIDATE_ONLY",
+  "sources": [
+    {
+      "sourceId": "google-play-supported-devices-2026-08",
+      "kind": "GOOGLE_PLAY_CSV",
+      "path": "snapshots/google-play-supported-devices.csv",
+      "uri": "https://support.google.com/googleplay/android-developer/answer/9859371",
+      "title": "Google Play supported devices CSV"
+    },
+    {
+      "sourceId": "androiddumps-2026-08",
+      "kind": "FIRMWARE_PROPS",
+      "path": "snapshots/androiddumps/device-root",
+      "uri": "https://github.com/DroidDumps",
+      "title": "Pinned AndroidDumps firmware property snapshot"
+    },
+    {
+      "sourceId": "pif-community-2026-08",
+      "kind": "PIF_JSON",
+      "path": "snapshots/pif/pif.json",
+      "uri": "https://github.com/TheFreeman193/PIFS",
+      "title": "Pinned Play Integrity community fingerprint snapshot"
+    },
+    {
+      "sourceId": "hardware-spec-reviewed-2026-08",
+      "kind": "HARDWARE_SPEC_CSV",
+      "authority": "HARDWARE_SPEC",
+      "path": "snapshots/hardware/spec.csv",
+      "uri": "https://browser.geekbench.com/",
+      "title": "Reviewed hardware specification export"
+    }
+  ]
+}

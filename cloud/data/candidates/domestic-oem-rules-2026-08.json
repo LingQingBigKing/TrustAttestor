@@ -1,0 +1,611 @@
+{
+  "schema": "trustattestor.domestic-oem-rules/v1",
+  "datasetId": "domestic-device-catalog-2026-08",
+  "region": "MULTI_REGION",
+  "collectedAt": "2026-08-23",
+  "policy": "CANDIDATE_ONLY",
+  "devicesDbSha256": "f63718a8c3582f4b3cfc68054ac141ce40d0157e0ccd3283bf13d3fc33da7058",
+  "rules": [
+    {
+      "ruleId": "xiaomi-brand-names",
+      "oem": "Xiaomi",
+      "manufacturerGroup": "Xiaomi",
+      "confidence": "BRAND_NAME",
+      "priority": 10,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Xiaomi", "Redmi", "POCO", "Mi", "Black Shark", "Blackshark"]}
+      ]
+    },
+    {
+      "ruleId": "oneplus-brand-name",
+      "oem": "OnePlus",
+      "manufacturerGroup": "OPlus",
+      "confidence": "BRAND_NAME",
+      "priority": 20,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["OnePlus"]}
+      ]
+    },
+    {
+      "ruleId": "realme-brand-name",
+      "oem": "realme",
+      "manufacturerGroup": "OPlus",
+      "confidence": "BRAND_NAME",
+      "priority": 21,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["realme"]}
+      ]
+    },
+    {
+      "ruleId": "oppo-brand-name",
+      "oem": "OPPO",
+      "manufacturerGroup": "OPlus",
+      "confidence": "BRAND_NAME",
+      "priority": 22,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["OPPO"]}
+      ]
+    },
+    {
+      "ruleId": "oplus-internal-device-code",
+      "oem": "OPlus",
+      "manufacturerGroup": "OPlus",
+      "confidence": "MODEL_PREFIX",
+      "priority": 24,
+      "conditions": [
+        {"field": "device", "operator": "REGEX", "values": ["^OP[0-9A-F]{4,}(?:L1)?$"]}
+      ]
+    },
+    {
+      "ruleId": "vivo-brand-name",
+      "oem": "vivo",
+      "manufacturerGroup": "vivo",
+      "confidence": "BRAND_NAME",
+      "priority": 30,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["vivo"]}
+      ]
+    },
+    {
+      "ruleId": "iqoo-brand-name",
+      "oem": "iQOO",
+      "manufacturerGroup": "vivo",
+      "confidence": "BRAND_NAME",
+      "priority": 31,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["iQOO"]}
+      ]
+    },
+    {
+      "ruleId": "vivo-internal-device-code",
+      "oem": "vivo",
+      "manufacturerGroup": "vivo",
+      "confidence": "MODEL_PREFIX",
+      "priority": 32,
+      "conditions": [
+        {"field": "device", "operator": "REGEX", "values": ["^PD[0-9]{4,}[A-Z]?$"]}
+      ]
+    },
+    {
+      "ruleId": "vivo-legacy-model-device",
+      "oem": "vivo",
+      "manufacturerGroup": "vivo",
+      "confidence": "SERIES_AND_MODEL",
+      "priority": 33,
+      "conditions": [
+        {"field": "model", "operator": "REGEX", "values": ["^vivo(?:[ _-])"]},
+        {"field": "device", "operator": "REGEX", "values": ["^(?:PD[0-9]{4,}[A-Z]?|[0-9]{4}|[VYX][0-9]{1,4})$"]}
+      ]
+    },
+    {
+      "ruleId": "huawei-brand-name",
+      "oem": "Huawei",
+      "manufacturerGroup": "Huawei",
+      "confidence": "BRAND_NAME",
+      "priority": 40,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Huawei"]}
+      ]
+    },
+    {
+      "ruleId": "honor-brand-name",
+      "oem": "HONOR",
+      "manufacturerGroup": "HONOR",
+      "confidence": "BRAND_NAME",
+      "priority": 41,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["HONOR"]}
+      ]
+    },
+    {
+      "ruleId": "huawei-internal-device-code",
+      "oem": "Huawei",
+      "manufacturerGroup": "Huawei",
+      "confidence": "MODEL_PREFIX",
+      "priority": 43,
+      "conditions": [
+        {"field": "device", "operator": "REGEX", "values": ["^HW[A-Z0-9_-]+$"]}
+      ]
+    },
+    {
+      "ruleId": "zte-brand-name",
+      "oem": "ZTE",
+      "manufacturerGroup": "ZTE",
+      "confidence": "BRAND_NAME",
+      "priority": 50,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["ZTE"]}
+      ]
+    },
+    {
+      "ruleId": "nubia-brand-name",
+      "oem": "nubia",
+      "manufacturerGroup": "ZTE",
+      "confidence": "BRAND_NAME",
+      "priority": 51,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["nubia"]}
+      ]
+    },
+    {
+      "ruleId": "redmagic-brand-name",
+      "oem": "REDMAGIC",
+      "manufacturerGroup": "ZTE",
+      "confidence": "BRAND_NAME",
+      "priority": 52,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["REDMAGIC", "Red Magic"]}
+      ]
+    },
+    {
+      "ruleId": "lenovo-brand-name",
+      "oem": "Lenovo",
+      "manufacturerGroup": "Lenovo",
+      "confidence": "BRAND_NAME",
+      "priority": 60,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Lenovo", "ZUK"]}
+      ]
+    },
+    {
+      "ruleId": "motorola-brand-name",
+      "oem": "Motorola",
+      "manufacturerGroup": "Lenovo",
+      "confidence": "BRAND_NAME",
+      "priority": 61,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Motorola", "moto"]}
+      ]
+    },
+    {
+      "ruleId": "meizu-brand-name",
+      "oem": "Meizu",
+      "manufacturerGroup": "Meizu",
+      "confidence": "BRAND_NAME",
+      "priority": 70,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Meizu"]}
+      ]
+    },
+    {
+      "ruleId": "tecno-brand-name",
+      "oem": "TECNO",
+      "manufacturerGroup": "Transsion",
+      "confidence": "BRAND_NAME",
+      "priority": 80,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["TECNO"]}
+      ]
+    },
+    {
+      "ruleId": "infinix-brand-name",
+      "oem": "Infinix",
+      "manufacturerGroup": "Transsion",
+      "confidence": "BRAND_NAME",
+      "priority": 81,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Infinix"]}
+      ]
+    },
+    {
+      "ruleId": "itel-brand-name",
+      "oem": "itel",
+      "manufacturerGroup": "Transsion",
+      "confidence": "BRAND_NAME",
+      "priority": 82,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["itel"]}
+      ]
+    },
+    {
+      "ruleId": "tcl-brand-names",
+      "oem": "TCL",
+      "manufacturerGroup": "TCL",
+      "confidence": "BRAND_NAME",
+      "priority": 90,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["TCL", "Alcatel"]}
+      ]
+    },
+    {
+      "ruleId": "legacy-mainland-brand-names",
+      "oem": "__FROM_PREFIX__",
+      "manufacturerGroup": "Independent",
+      "confidence": "BRAND_NAME",
+      "priority": 100,
+      "prefixOemMap": {
+        "Hisense": "Hisense",
+        "Coolpad": "Coolpad",
+        "Gionee": "Gionee",
+        "Smartisan": "Smartisan",
+        "LeEco": "LeEco",
+        "LeTV": "LeEco",
+        "Meitu": "Meitu",
+        "Haier": "Haier",
+        "Konka": "Konka",
+        "Changhong": "Changhong",
+        "NIO": "NIO",
+        "LePhone": "LePhone",
+        "360": "360 Mobile",
+        "Qiku": "360 Mobile",
+        "Koobee": "Koobee",
+        "ivvi": "ivvi",
+        "Sugar": "SUGAR",
+        "imoo": "imoo",
+        "Qin": "Duoqin",
+        "Duoqin": "Duoqin",
+        "China Mobile": "China Mobile",
+        "NZONE": "China Mobile",
+        "Nzone": "China Mobile",
+        "TD Tech": "TD Tech",
+        "Hi nova": "Hi nova",
+        "Hinova": "Hi nova",
+        "U-Magic": "China Unicom",
+        "Royole": "Royole",
+        "FlexPai": "Royole",
+        "GREE": "GREE",
+        "8848": "8848",
+        "Amoi": "Amoi",
+        "Bird": "Bird",
+        "PPTV": "PPTV"
+      },
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Hisense", "Coolpad", "Gionee", "Smartisan", "LeEco", "LeTV", "Meitu", "Haier", "Konka", "Changhong", "NIO", "LePhone", "360", "Qiku", "Koobee", "ivvi", "Sugar", "imoo", "Qin", "Duoqin", "China Mobile", "NZONE", "Nzone", "TD Tech", "Hi nova", "Hinova", "U-Magic", "Royole", "FlexPai", "GREE", "8848", "Amoi", "Bird", "PPTV"]}
+      ]
+    },
+    {
+      "ruleId": "rugged-export-brand-names",
+      "oem": "__FROM_PREFIX__",
+      "manufacturerGroup": "China Export Brands",
+      "confidence": "BRAND_NAME",
+      "priority": 110,
+      "prefixOemMap": {
+        "Ulefone": "Ulefone",
+        "OUKITEL": "OUKITEL",
+        "IIIF150": "OUKITEL",
+        "DOOGEE": "DOOGEE",
+        "Blackview": "Blackview",
+        "OSCAL": "Blackview",
+        "CUBOT": "CUBOT",
+        "UMIDIGI": "UMIDIGI",
+        "AGM": "AGM",
+        "FOSSiBOT": "FOSSiBOT",
+        "HOTWAV": "HOTWAV",
+        "Unihertz": "Unihertz",
+        "Elephone": "Elephone",
+        "Leagoo": "Leagoo",
+        "NOMU": "NOMU",
+        "Vernee": "Vernee",
+        "HOMTOM": "HOMTOM",
+        "Bluboo": "Bluboo",
+        "VKworld": "VKworld"
+      },
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Ulefone", "OUKITEL", "IIIF150", "DOOGEE", "Blackview", "OSCAL", "CUBOT", "UMIDIGI", "AGM", "FOSSiBOT", "HOTWAV", "Unihertz", "Elephone", "Leagoo", "NOMU", "Vernee", "HOMTOM", "Bluboo", "VKworld"]}
+      ]
+    },
+    {
+      "ruleId": "rugged-export-model-names",
+      "oem": "__FROM_PREFIX__",
+      "manufacturerGroup": "China Export Brands",
+      "confidence": "MODEL_PREFIX",
+      "priority": 112,
+      "prefixOemMap": {
+        "Ulefone": "Ulefone",
+        "OUKITEL": "OUKITEL",
+        "IIIF150": "OUKITEL",
+        "DOOGEE": "DOOGEE",
+        "Blackview": "Blackview",
+        "OSCAL": "Blackview",
+        "CUBOT": "CUBOT",
+        "UMIDIGI": "UMIDIGI",
+        "FOSSiBOT": "FOSSiBOT",
+        "HOTWAV": "HOTWAV",
+        "Unihertz": "Unihertz"
+      },
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["Ulefone", "OUKITEL", "IIIF150", "DOOGEE", "Blackview", "OSCAL", "CUBOT", "UMIDIGI", "FOSSiBOT", "HOTWAV", "Unihertz"]}
+      ]
+    },
+    {
+      "ruleId": "china-tablet-brand-names",
+      "oem": "__FROM_PREFIX__",
+      "manufacturerGroup": "China Tablet Brands",
+      "confidence": "BRAND_NAME",
+      "priority": 120,
+      "prefixOemMap": {
+        "Ainol": "Ainol",
+        "Teclast": "Teclast",
+        "CHUWI": "CHUWI",
+        "ALLDOCUBE": "ALLDOCUBE",
+        "Alldocube": "ALLDOCUBE",
+        "Onda": "Onda",
+        "Pipo": "Pipo",
+        "BMAX": "BMAX",
+        "Headwolf": "Headwolf",
+        "Dragon Touch": "Dragon Touch"
+      },
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Ainol", "Teclast", "CHUWI", "ALLDOCUBE", "Alldocube", "Onda", "Pipo", "BMAX", "Headwolf", "Dragon Touch"]}
+      ]
+    },
+    {
+      "ruleId": "china-tablet-model-names",
+      "oem": "__FROM_PREFIX__",
+      "manufacturerGroup": "China Tablet Brands",
+      "confidence": "MODEL_PREFIX",
+      "priority": 121,
+      "prefixOemMap": {
+        "Ainol": "Ainol",
+        "Teclast": "Teclast",
+        "CHUWI": "CHUWI",
+        "ALLDOCUBE": "ALLDOCUBE",
+        "Alldocube": "ALLDOCUBE",
+        "Onda": "Onda",
+        "Pipo": "Pipo",
+        "BMAX": "BMAX",
+        "Headwolf": "Headwolf",
+        "Dragon Touch": "Dragon Touch"
+      },
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["Ainol", "Teclast", "CHUWI", "ALLDOCUBE", "Alldocube", "Onda", "Pipo", "BMAX", "Headwolf", "Dragon Touch"]}
+      ]
+    },
+    {
+      "ruleId": "china-export-phone-brand-names",
+      "oem": "__FROM_PREFIX__",
+      "manufacturerGroup": "China Export Brands",
+      "confidence": "BRAND_NAME",
+      "priority": 122,
+      "prefixOemMap": {
+        "K-Touch": "K-Touch",
+        "KTouch": "K-Touch",
+        "Zopo": "Zopo",
+        "THL": "THL",
+        "Jiayu": "Jiayu",
+        "UMI": "UMI",
+        "M-HORSE": "M-HORSE",
+        "Poptel": "Poptel"
+      },
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["K-Touch", "KTouch", "Zopo", "THL", "Jiayu", "UMI", "M-HORSE", "Poptel"]}
+      ]
+    },
+    {
+      "ruleId": "taiwan-oem-brand-and-series-names",
+      "oem": "__FROM_PREFIX__",
+      "manufacturerGroup": "Taiwan OEMs",
+      "confidence": "BRAND_NAME",
+      "priority": 130,
+      "prefixOemMap": {
+        "ASUS": "ASUS",
+        "ZenFone": "ASUS",
+        "Zenfone": "ASUS",
+        "ZenPad": "ASUS",
+        "ROG Phone": "ASUS",
+        "HTC": "HTC",
+        "Desire": "HTC",
+        "Wildfire": "HTC",
+        "Acer": "Acer",
+        "Liquid": "Acer",
+        "Iconia": "Acer",
+        "GIGABYTE": "GIGABYTE",
+        "GSmart": "GIGABYTE"
+      },
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["ASUS", "ZenFone", "Zenfone", "ZenPad", "ROG Phone", "HTC", "Desire", "Wildfire", "Acer", "Liquid", "Iconia", "GIGABYTE", "GSmart"]}
+      ]
+    },
+    {
+      "ruleId": "taiwan-oem-model-names",
+      "oem": "__FROM_PREFIX__",
+      "manufacturerGroup": "Taiwan OEMs",
+      "confidence": "MODEL_PREFIX",
+      "priority": 131,
+      "prefixOemMap": {
+        "ASUS": "ASUS",
+        "HTC": "HTC",
+        "Acer": "Acer",
+        "GIGABYTE": "GIGABYTE",
+        "GSmart": "GIGABYTE"
+      },
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["ASUS", "HTC", "Acer", "GIGABYTE", "GSmart"]}
+      ]
+    },
+    {
+      "ruleId": "realme-rmx-model",
+      "oem": "realme",
+      "manufacturerGroup": "OPlus",
+      "confidence": "MODEL_PREFIX",
+      "priority": 200,
+      "conditions": [
+        {"field": "model", "operator": "REGEX", "values": ["^RMX[0-9A-Z-]+$"]}
+      ]
+    },
+    {
+      "ruleId": "huawei-model-prefix",
+      "oem": "Huawei",
+      "manufacturerGroup": "Huawei",
+      "confidence": "MODEL_PREFIX",
+      "priority": 201,
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["HUAWEI"]}
+      ]
+    },
+    {
+      "ruleId": "honor-model-prefix",
+      "oem": "HONOR",
+      "manufacturerGroup": "HONOR",
+      "confidence": "MODEL_PREFIX",
+      "priority": 202,
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["HONOR"]}
+      ]
+    },
+    {
+      "ruleId": "zte-model-prefix",
+      "oem": "ZTE",
+      "manufacturerGroup": "ZTE",
+      "confidence": "MODEL_PREFIX",
+      "priority": 203,
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["ZTE"]}
+      ]
+    },
+    {
+      "ruleId": "lenovo-model-prefix",
+      "oem": "Lenovo",
+      "manufacturerGroup": "Lenovo",
+      "confidence": "MODEL_PREFIX",
+      "priority": 204,
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["Lenovo"]}
+      ]
+    },
+    {
+      "ruleId": "motorola-model-prefix",
+      "oem": "Motorola",
+      "manufacturerGroup": "Lenovo",
+      "confidence": "MODEL_PREFIX",
+      "priority": 205,
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["motorola", "moto"]}
+      ]
+    },
+    {
+      "ruleId": "tecno-model-prefix",
+      "oem": "TECNO",
+      "manufacturerGroup": "Transsion",
+      "confidence": "MODEL_PREFIX",
+      "priority": 206,
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["TECNO"]}
+      ]
+    },
+    {
+      "ruleId": "infinix-model-prefix",
+      "oem": "Infinix",
+      "manufacturerGroup": "Transsion",
+      "confidence": "MODEL_PREFIX",
+      "priority": 207,
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["Infinix"]}
+      ]
+    },
+    {
+      "ruleId": "itel-model-prefix",
+      "oem": "itel",
+      "manufacturerGroup": "Transsion",
+      "confidence": "MODEL_PREFIX",
+      "priority": 208,
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["itel"]}
+      ]
+    },
+    {
+      "ruleId": "tcl-model-prefix",
+      "oem": "TCL",
+      "manufacturerGroup": "TCL",
+      "confidence": "MODEL_PREFIX",
+      "priority": 209,
+      "conditions": [
+        {"field": "model", "operator": "PREFIX", "values": ["TCL", "Alcatel"]}
+      ]
+    },
+    {
+      "ruleId": "oplus-cph-model",
+      "oem": "OPlus",
+      "manufacturerGroup": "OPlus",
+      "confidence": "MODEL_PREFIX",
+      "priority": 220,
+      "conditions": [
+        {"field": "model", "operator": "REGEX", "values": ["^CPH[0-9]+$"]}
+      ]
+    },
+    {
+      "ruleId": "oppo-find-reno-device",
+      "oem": "OPPO",
+      "manufacturerGroup": "OPlus",
+      "confidence": "SERIES_AND_MODEL",
+      "priority": 23,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Find", "Reno"]},
+        {"field": "device", "operator": "REGEX", "values": ["^OP[0-9A-F]{4,}(?:L1)?$"]}
+      ]
+    },
+    {
+      "ruleId": "huawei-series-device",
+      "oem": "Huawei",
+      "manufacturerGroup": "Huawei",
+      "confidence": "SERIES_AND_MODEL",
+      "priority": 42,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Mate", "nova", "MediaPad"]},
+        {"field": "device", "operator": "REGEX", "values": ["^HW[A-Z0-9_-]+$"]}
+      ]
+    },
+    {
+      "ruleId": "zte-series-name",
+      "oem": "ZTE",
+      "manufacturerGroup": "ZTE",
+      "confidence": "SERIES_AND_MODEL",
+      "priority": 53,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Blade", "Axon"]}
+      ]
+    },
+    {
+      "ruleId": "tecno-series-model",
+      "oem": "TECNO",
+      "manufacturerGroup": "Transsion",
+      "confidence": "SERIES_AND_MODEL",
+      "priority": 83,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["CAMON", "POVA", "SPARK", "PHANTOM"]},
+        {"field": "model", "operator": "PREFIX", "values": ["TECNO"]}
+      ]
+    },
+    {
+      "ruleId": "infinix-series-model",
+      "oem": "Infinix",
+      "manufacturerGroup": "Transsion",
+      "confidence": "SERIES_AND_MODEL",
+      "priority": 84,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["HOT", "NOTE", "ZERO", "SMART"]},
+        {"field": "model", "operator": "PREFIX", "values": ["Infinix"]}
+      ]
+    },
+    {
+      "ruleId": "ulefone-armor-series",
+      "oem": "Ulefone",
+      "manufacturerGroup": "China Export Brands",
+      "confidence": "SERIES_AND_MODEL",
+      "priority": 111,
+      "conditions": [
+        {"field": "name", "operator": "PREFIX", "values": ["Armor"]}
+      ]
+    }
+  ]
+}

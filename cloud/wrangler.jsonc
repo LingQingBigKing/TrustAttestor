@@ -1,0 +1,77 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trustattestor-cloud",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-24",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    {
+      "pattern": "api.lingqing.ltd",
+      "custom_domain": true
+    }
+  ],
+  "vars": {
+    "VERDICT_KEY_ID": "ta-prod-2026-01",
+    "RULESET_VERSION": "13",
+    "ALLOWED_PACKAGE": "com.lingqing.trustattestor",
+    "CATALOG_VERSION": "1",
+    "OBSERVATION_MIN_SOURCES": "5",
+    "OBSERVATION_MIN_NETWORKS": "3",
+    "OBSERVATION_RETENTION_DAYS": "180"
+  },
+  "secrets": {
+    "required": ["VERDICT_PRIVATE_KEY", "OBSERVATION_NETWORK_KEY", "TRUSTED_SIGNER_DIGESTS"]
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "CHALLENGES",
+        "class_name": "ChallengeStore"
+      }
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "KEYBOX_DB",
+      "database_name": "trustattestor-keybox-blacklist",
+      "database_id": "replace-with-keybox-database-id",
+      "migrations_dir": "migrations"
+    },
+    {
+      "binding": "DEVICE_CATALOG_DB",
+      "database_name": "trustattestor-device-catalog",
+      "database_id": "replace-with-device-catalog-database-id",
+      "migrations_dir": "catalog-migrations"
+    }
+  ],
+  "queues": {
+    "producers": [
+      {
+        "binding": "OBSERVATION_QUEUE",
+        "queue": "trustattestor-observations"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "trustattestor-observations",
+        "max_batch_size": 25,
+        "max_batch_timeout": 10,
+        "max_retries": 8,
+        "dead_letter_queue": "trustattestor-observations-dlq"
+      }
+    ]
+  },
+  "triggers": {
+    "crons": ["17 3 * * *"]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["ChallengeStore"]
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.1
+  }
+}

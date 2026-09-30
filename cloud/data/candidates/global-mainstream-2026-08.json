@@ -1,0 +1,248 @@
+{
+  "schema": "trustattestor.baseline-candidates/v1",
+  "datasetId": "global-mainstream-2026-08",
+  "region": "GLOBAL",
+  "collectedAt": "2026-08-23",
+  "policy": "CANDIDATE_ONLY",
+  "catalogs": {
+    "devicesDbSha256": "f63718a8c3582f4b3cfc68054ac141ce40d0157e0ccd3283bf13d3fc33da7058",
+    "socsJsonSha256": "9e677613ec046c62804671b4d9e40bac32e5c691c7e297b8a6827f4ebfffaaae"
+  },
+  "sources": [
+    {
+      "sourceId": "device-catalog",
+      "authority": "REFERENCE_CATALOG",
+      "uri": "catalog://devices.db",
+      "title": "设备识别字典 devices.db"
+    },
+    {
+      "sourceId": "google-pixel-10-family",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://store.google.com/category/phones?hl=en-US",
+      "title": "Google Store Pixel 10 family comparison"
+    },
+    {
+      "sourceId": "samsung-s25-specification",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://images.samsung.com/is/content/samsung/assets/us/business/mobile/phones/galaxy-s25/10102025/S25_Series_B2B_spec_sheet_update_c.pdf",
+      "title": "Samsung Galaxy S25 series official specification sheet"
+    },
+    {
+      "sourceId": "motorola-razr60-ultra-specification",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://en-in.support.motorola.com/app/answers/detail/a_id/187134/~/specifications---motorola-razr-60-ultra",
+      "title": "Motorola razr 60 ultra official specifications"
+    },
+    {
+      "sourceId": "sony-xperia-android-versions",
+      "authority": "OEM_SECURITY_BULLETIN",
+      "uri": "https://www.sony.com/electronics/support/mobile-phones-tablets/articles/SX243901",
+      "title": "Sony Xperia devices and Android versions"
+    },
+    {
+      "sourceId": "sony-xperia1-vii-source",
+      "authority": "OEM_OPEN_SOURCE",
+      "uri": "https://developer.sony.com/file/download/open-source-archive-for-71-1-a-2-144",
+      "title": "Sony Xperia 1 VII official open-source archive"
+    },
+    {
+      "sourceId": "nothing-phone3-product",
+      "authority": "OEM_PRODUCT_PAGE",
+      "uri": "https://us.nothing.tech/products/phone-3",
+      "title": "Nothing Phone (3) official product page"
+    }
+  ],
+  "records": [
+    {
+      "candidateId": "global-google-pixel10",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "GLOBAL",
+      "values": {
+        "oem": "Google",
+        "marketingName": "Pixel 10",
+        "device": "frankel",
+        "model": "Pixel 10",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "Tensor G5",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["google-pixel-10-family"],
+        "marketingName": ["google-pixel-10-family"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["google-pixel-10-family"]
+      }
+    },
+    {
+      "candidateId": "global-google-pixel10-pro",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "GLOBAL",
+      "values": {
+        "oem": "Google",
+        "marketingName": "Pixel 10 Pro",
+        "device": "blazer",
+        "model": "Pixel 10 Pro",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "Tensor G5",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["google-pixel-10-family"],
+        "marketingName": ["google-pixel-10-family"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["google-pixel-10-family"]
+      }
+    },
+    {
+      "candidateId": "global-google-pixel10-pro-xl",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "GLOBAL",
+      "values": {
+        "oem": "Google",
+        "marketingName": "Pixel 10 Pro XL",
+        "device": "mustang",
+        "model": "Pixel 10 Pro XL",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "Tensor G5",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["google-pixel-10-family"],
+        "marketingName": ["google-pixel-10-family"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["google-pixel-10-family"]
+      }
+    },
+    {
+      "candidateId": "global-samsung-galaxy-s25-ultra-sm-s938b",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "GLOBAL",
+      "values": {
+        "oem": "Samsung",
+        "marketingName": "Galaxy S25 Ultra",
+        "device": "pa3q",
+        "model": "SM-S938B",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8750",
+        "launchAndroidRelease": "15",
+        "kernelAndroidGeneration": "",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["samsung-s25-specification"],
+        "marketingName": ["samsung-s25-specification"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["samsung-s25-specification"],
+        "launchAndroidRelease": ["samsung-s25-specification"]
+      }
+    },
+    {
+      "candidateId": "global-motorola-razr60-ultra-xt2551-3",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "GLOBAL",
+      "values": {
+        "oem": "Motorola",
+        "marketingName": "motorola razr 60 ultra",
+        "device": "leap",
+        "model": "XT2551-3",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8750",
+        "launchAndroidRelease": "15",
+        "kernelAndroidGeneration": "",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["motorola-razr60-ultra-specification"],
+        "marketingName": ["motorola-razr60-ultra-specification"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["motorola-razr60-ultra-specification"],
+        "launchAndroidRelease": ["motorola-razr60-ultra-specification"]
+      }
+    },
+    {
+      "candidateId": "global-sony-xperia1-vii-xq-fs54",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "GLOBAL",
+      "values": {
+        "oem": "Sony",
+        "marketingName": "Xperia 1 VII",
+        "device": "XQ-FS",
+        "model": "XQ-FS54",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "",
+        "launchAndroidRelease": "15",
+        "kernelAndroidGeneration": "",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["sony-xperia1-vii-source"],
+        "marketingName": ["sony-xperia-android-versions", "sony-xperia1-vii-source"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog", "sony-xperia1-vii-source"],
+        "launchAndroidRelease": ["sony-xperia-android-versions"]
+      }
+    },
+    {
+      "candidateId": "global-nothing-phone3-a024",
+      "candidateKind": "DEVICE_VARIANT",
+      "market": "GLOBAL",
+      "values": {
+        "oem": "Nothing",
+        "marketingName": "Nothing Phone (3)",
+        "device": "Metroid",
+        "model": "A024",
+        "product": "",
+        "sku": "",
+        "brand": "",
+        "manufacturer": "",
+        "boardPlatform": "",
+        "socAlias": "SM8735",
+        "launchAndroidRelease": "",
+        "kernelAndroidGeneration": "",
+        "kernelFamily": ""
+      },
+      "evidence": {
+        "oem": ["nothing-phone3-product"],
+        "marketingName": ["nothing-phone3-product"],
+        "device": ["device-catalog"],
+        "model": ["device-catalog"],
+        "socAlias": ["nothing-phone3-product"]
+      }
+    }
+  ]
+}

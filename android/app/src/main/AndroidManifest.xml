@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+package="com.lingqing.trustattestor">
+
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.INTERNET" />
+
+<queries>
+    <package android:name="com.tencent.soter.soterserver" />
+    <intent>
+        <action android:name="com.tencent.soter.soterserver.ISoterService" />
+    </intent>
+</queries>
+
+<application
+    android:icon="@mipmap/ic_launcher"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:theme="@style/Theme.TrustAttestor"
+    android:allowBackup="false"
+    android:label="Trust Attestor"
+    android:supportsRtl="true"
+    android:zygotePreloadName="com.lingqing.trustattestor.TrustAttestorZygotePreload"
+    tools:ignore="MissingApplicationIcon"
+    tools:targetApi="tiramisu">
+
+    <activity
+        android:name=".MainActivity"
+        android:exported="true"
+        android:launchMode="singleTask"
+        android:theme="@style/Theme.TrustAttestor.Starting">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+    <service
+        android:name=".TrustAttestorService"
+        android:exported="false"
+        android:isolatedProcess="true"
+        android:useAppZygote="true">
+        <intent-filter>
+            <action android:name="com.lingqing.trustattestor.THRONE_HUNT_MIME_ANCHOR" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeGroup="trustattestor-throne-hunt" />
+        </intent-filter>
+    </service>
+
+    <service
+        android:name=".ReadProcProbeService"
+        android:isolatedProcess="true" />
+
+</application>
+</manifest>

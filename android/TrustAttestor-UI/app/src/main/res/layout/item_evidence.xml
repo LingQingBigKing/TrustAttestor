@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:minHeight="30dp"
+    android:orientation="horizontal"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp">
+
+    <TextView
+        android:id="@+id/tvEvidenceBullet"
+        android:layout_width="14dp"
+        android:layout_height="18dp"
+        android:fontFamily="monospace"
+        android:gravity="top|center_horizontal"
+        android:text="•"
+        android:textColor="@color/ta_idle"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tvEvidenceLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:breakStrategy="balanced"
+        android:fontFamily="monospace"
+        android:hyphenationFrequency="none"
+        android:lineSpacingExtra="1dp"
+        android:textColor="@color/ta_text_secondary"
+        android:textIsSelectable="true"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tvEvidenceBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_evidence_badge"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:maxLines="1"
+        android:minWidth="68dp"
+        android:paddingStart="5dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="2dp"
+        android:text="[DETECTED]"
+        android:textColor="@color/ta_error"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+</LinearLayout>

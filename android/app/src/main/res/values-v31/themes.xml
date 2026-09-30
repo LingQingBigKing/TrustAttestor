@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.TrustAttestor.Starting" parent="Theme.TrustAttestor">
+        <item name="android:windowBackground">@drawable/bg_launch</item>
+        <item name="android:windowSplashScreenBackground">@color/ta_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/app_icon_padded</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+    </style>
+</resources>

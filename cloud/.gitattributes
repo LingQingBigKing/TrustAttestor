@@ -1,0 +1,2 @@
+# Android and other Unix environments require LF shell scripts.
+*.sh text eol=lf

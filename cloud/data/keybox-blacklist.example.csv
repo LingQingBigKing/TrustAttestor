@@ -1,0 +1,2 @@
+serial_number,certificate_sha256,issuer_spki_sha256,source,reason,first_seen_at,active
+1234,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,replace-with-source,仅为导入格式示例，请勿将本行用于生产,2026-08-22T00:00:00Z,0

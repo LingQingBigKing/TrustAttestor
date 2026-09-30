@@ -1,32 +1,27 @@
 # TrustAttestor
 
-[简体中文说明](./README.md)
+[简体中文](README.md) · [MIT License](LICENSE)
 
-TrustAttestor is an Android device trust assessment tool for developers, power users, and risk-control scenarios. It evaluates device integrity and runtime environment from multiple dimensions, including system status, root traces, injection behaviors, Native Bridge usage, privilege risks, Key Attestation, and revocation list checks, then provides clear results and a scoring system to help determine overall device trustworthiness.  
+TrustAttestor is an open-source Android trust diagnostics project for security research, device self-checks, and risk-analysis support. The client and cloud verifier share one repository:
 
----
+| Directory | Contents |
+| --- | --- |
+| [`android/`](android/README_EN.md) | Android client, native detector, KeyMint/Keystore probes, and UI preview |
+| [`cloud/`](cloud/README.md) | Cloudflare Workers attestation, revocation/Keybox rules, catalog, and tests |
 
-## Introduction
+The client is **v1.5**, supports Android 8.1 / API 27 and later, and targets `arm64-v8a`. Results summarize observable evidence, not an absolute security guarantee. An unavailable probe is neither a detection nor a pass.
 
-TrustAttestor is designed to provide a clearer and more detailed trust assessment experience for Android devices. By combining local detection logic with system environment analysis, it helps identify abnormal modifications, injection traces, suspicious privilege conditions, and integrity-related risks. It is suitable for security research, device self-checking, environment evaluation, and risk-control assistance.
+```bash
+git clone --recurse-submodules https://github.com/LingQingBigKing/TrustAttestor.git
+cd TrustAttestor/android
+./gradlew :dex:check
+./gradlew :app:assembleDebug
+```
 
-## Features
+Use `gradlew.bat` on Windows. See the [Android documentation](android/README_EN.md) for requirements and release signing. See the [cloud documentation](cloud/README.md) for development, deployment, and protocol details.
 
-- Multi-dimensional device trust assessment
-- Detection of Magisk / KernelSu / APatch traces
-- Native Bridge / injection environment checks
-- Privilege risk and system environment analysis
-- Key Attestation and revocation list support
-- Scoring system and trust level presentation
+Custom obfuscator integrations and detector self-protection anti-debug code have been removed. Android uses standard R8/D8. The independent anti-debug sample is not part of this repository or the client build.
 
-## Use Cases
+Signing keys, local SDK settings, Cloudflare secrets, actual Keyboxes, and real device reports must not be committed. Please report vulnerabilities privately through GitHub Security Advisory.
 
-- Developer debugging and security testing
-- Device self-checks for power users
-- Risk-control and trust evaluation assistance
-- Android security research and experiments
-
-## Community
-
-- QQ Group: 755345549
-- TG: @TrustAttestor
+Project-owned code is released under the [MIT License](LICENSE). Third-party components remain under their respective licenses.

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingBottom="8dp"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="22dp">
+
+        <LinearLayout
+            android:id="@+id/heroCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_detail_block"
+            android:clipChildren="true"
+            android:elevation="0dp"
+            android:orientation="vertical"
+            android:paddingStart="14dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="sans"
+                        android:text="@string/home_diagnosis_title"
+                        android:textColor="@color/ta_text"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@color/ta_divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/summaryIconCard"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp">
+
+                        <ProgressBar
+                            android:id="@+id/progressTop"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/ivSummaryStatus"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="Attestation state"
+                            android:src="@drawable/ic_state_idle" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvSummaryTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        android:layout_weight="1"
+                        android:fontFamily="sans"
+                        android:maxLines="2"
+                        android:text="@string/home_summary_idle"
+                        android:textColor="@color/ta_text"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvSummaryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="33dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="monospace"
+                    android:text="3 个检查层 · 等待检测"
+                    android:textColor="@color/ta_subtext"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="monospace"
+                    android:textColor="@color/ta_running"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+                <FrameLayout
+                    android:id="@+id/heroIndicatorTrack"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_hero_indicator_track"
+                    android:clipChildren="true"
+                    android:clipToPadding="true"
+                    android:padding="1dp">
+
+                    <View
+                        android:id="@+id/heroIndicatorFill"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.96"
+                        android:background="@drawable/bg_hero_indicator_fill"
+                        android:scaleX="0.14" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="sans"
+                    android:text="@string/home_device_baseline"
+                    android:textColor="@color/ta_subtext"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvTelemetryAbi"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="monospace"
+                                android:maxLines="1"
+                                android:text="ABI    --"
+                                android:textColor="@color/ta_text_secondary"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:id="@+id/tvTelemetryModel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="monospace"
+                                android:maxLines="1"
+                                android:text="MOD    --"
+                                android:textColor="@color/ta_text_secondary"
+                                android:textSize="9sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvTelemetryOs"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="monospace"
+                                android:maxLines="1"
+                                android:text="OS     --"
+                                android:textColor="@color/ta_text_secondary"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:id="@+id/tvTelemetrySpl"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="monospace"
+                                android:maxLines="1"
+                                android:text="SPL    --"
+                                android:textColor="@color/ta_text_secondary"
+                                android:textSize="9sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvTelemetryBuild"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="monospace"
+                            android:lineSpacingExtra="1dp"
+                            android:maxLines="2"
+                            android:text="BUILD  --"
+                            android:textColor="@color/ta_subtext"
+                            android:textSize="9sp" />
+                </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans"
+            android:text="@string/home_integrity_items"
+            android:textColor="@color/ta_text"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:id="@+id/stepTopology"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <com.lingqing.trustattestor.ui.TopologyRailView
+                android:id="@+id/trustChainRail"
+                android:layout_width="66dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp" />
+
+            <LinearLayout
+                android:id="@+id/stepContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnExportReport"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/ta_surface"
+            android:elevation="0dp"
+            android:fontFamily="monospace"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:letterSpacing="0"
+            android:minHeight="42dp"
+            android:stateListAnimator="@null"
+            android:text="@string/export_forensic_report"
+            android:textAllCaps="false"
+            android:textColor="@color/ta_text_secondary"
+            android:textSize="10sp"
+            app:cornerRadius="4dp"
+            app:icon="@drawable/ic_export_report"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconSize="16dp"
+            app:iconTint="@color/ta_text_secondary"
+            app:rippleColor="@color/ta_primary_soft"
+            app:strokeColor="@color/ta_stroke"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
+</ScrollView>

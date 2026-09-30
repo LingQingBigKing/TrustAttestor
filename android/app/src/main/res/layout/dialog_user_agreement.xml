@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="6dp">
+
+    <LinearLayout
+        android:id="@+id/agreementCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_agreement_dialog"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvAgreementTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/user_agreement"
+                        android:textColor="@color/ta_text"
+                         android:textSize="21sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvAgreementSubtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/agreement_first_subtitle"
+                        android:textColor="@color/ta_subtext"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvAgreementUpdatedAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_agreement_meta_chip"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/agreement_updated_at"
+                    android:textColor="@color/ta_text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAgreementIntro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:lineSpacingExtra="2dp"
+                android:text="@string/agreement_first_intro"
+                android:textColor="@color/ta_text_secondary"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/agreementGateContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_agreement_scroll"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="14dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvAgreementGateHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/agreement_gate_hint"
+                    android:textColor="@color/ta_text"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvAgreementTimerChip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_agreement_gate_chip"
+                        android:gravity="center"
+                        android:paddingStart="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/agreement_timer_remaining"
+                        android:textColor="@color/ta_text_secondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:id="@+id/agreementGateSpacer"
+                        android:layout_width="10dp"
+                        android:layout_height="1dp" />
+
+                    <TextView
+                        android:id="@+id/tvAgreementScrollChip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_agreement_gate_chip"
+                        android:gravity="center"
+                        android:paddingStart="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/agreement_scroll_required"
+                        android:textColor="@color/ta_text_secondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_agreement_read_progress_track">
+
+                    <View
+                        android:id="@+id/vAgreementReadProgress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_agreement_read_progress_fill"
+                        android:scaleX="0"
+                        android:transformPivotX="0dp" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/ta_divider" />
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/agreementScroll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_agreement_scroll"
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                android:layout_weight="1"
+                android:overScrollMode="never"
+                android:padding="0dp"
+                android:scrollbars="none">
+
+                <TextView
+                    android:id="@+id/tvAgreementContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="6dp"
+                    android:padding="18dp"
+                    android:textColor="@color/ta_text_secondary"
+                    android:textIsSelectable="true"
+                    android:textSize="14sp" />
+            </androidx.core.widget.NestedScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvAgreementFooterHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/agreement_result_notice"
+                    android:textColor="@color/ta_subtext"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="end|center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAgreementCancel"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/ta_surface"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:minWidth="0dp"
+                        android:minHeight="48dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/cancel"
+                        android:textColor="@color/ta_text_secondary"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:cornerRadius="6dp"
+                        app:strokeColor="@color/ta_stroke"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAgreementAction"
+                        style="@style/Widget.Material3.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/ta_primary"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:minWidth="0dp"
+                        android:minHeight="48dp"
+                        android:paddingStart="18dp"
+                        android:paddingTop="0dp"
+                        android:paddingEnd="18dp"
+                        android:paddingBottom="0dp"
+                        android:text="@string/agreement_acknowledge"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="6dp" />
+                </LinearLayout>
+            </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,338 @@
+{
+  "byConfidence": {
+    "BRAND_NAME": 5817,
+    "MODEL_PREFIX": 3247,
+    "SERIES_AND_MODEL": 816
+  },
+  "byManufacturerGroup": {
+    "China Export Brands": 238,
+    "China Tablet Brands": 3,
+    "HONOR": 284,
+    "Huawei": 1260,
+    "Independent": 356,
+    "Lenovo": 1299,
+    "Meizu": 32,
+    "OPlus": 1045,
+    "TCL": 1082,
+    "Taiwan OEMs": 1105,
+    "Transsion": 990,
+    "Xiaomi": 670,
+    "ZTE": 997,
+    "vivo": 519
+  },
+  "byOem": {
+    "AGM": 33,
+    "ASUS": 291,
+    "Acer": 156,
+    "Ainol": 1,
+    "BMAX": 1,
+    "Blackview": 14,
+    "CHUWI": 1,
+    "CUBOT": 18,
+    "China Mobile": 1,
+    "Coolpad": 29,
+    "DOOGEE": 1,
+    "Elephone": 1,
+    "GIGABYTE": 29,
+    "Gionee": 21,
+    "HONOR": 284,
+    "HTC": 629,
+    "Haier": 40,
+    "Hisense": 187,
+    "Huawei": 1260,
+    "Infinix": 288,
+    "K-Touch": 1,
+    "Konka": 17,
+    "Koobee": 4,
+    "LeEco": 1,
+    "LePhone": 19,
+    "Lenovo": 674,
+    "M-HORSE": 1,
+    "Meitu": 2,
+    "Meizu": 32,
+    "Motorola": 625,
+    "OPPO": 136,
+    "OPlus": 369,
+    "OUKITEL": 17,
+    "OnePlus": 165,
+    "Poptel": 1,
+    "REDMAGIC": 9,
+    "SUGAR": 27,
+    "TCL": 1082,
+    "TD Tech": 2,
+    "TECNO": 419,
+    "UMI": 1,
+    "UMIDIGI": 35,
+    "Ulefone": 114,
+    "Xiaomi": 670,
+    "ZTE": 939,
+    "Zopo": 1,
+    "iQOO": 93,
+    "itel": 283,
+    "ivvi": 6,
+    "nubia": 49,
+    "realme": 375,
+    "vivo": 426
+  },
+  "byRule": {
+    "china-export-phone-brand-names": 5,
+    "china-tablet-brand-names": 3,
+    "honor-brand-name": 284,
+    "huawei-brand-name": 144,
+    "huawei-internal-device-code": 936,
+    "huawei-model-prefix": 15,
+    "huawei-series-device": 165,
+    "infinix-brand-name": 103,
+    "infinix-model-prefix": 49,
+    "infinix-series-model": 136,
+    "iqoo-brand-name": 93,
+    "itel-brand-name": 162,
+    "itel-model-prefix": 121,
+    "legacy-mainland-brand-names": 356,
+    "lenovo-brand-name": 261,
+    "lenovo-model-prefix": 413,
+    "meizu-brand-name": 32,
+    "motorola-brand-name": 616,
+    "motorola-model-prefix": 9,
+    "nubia-brand-name": 49,
+    "oneplus-brand-name": 165,
+    "oplus-cph-model": 45,
+    "oplus-internal-device-code": 324,
+    "oppo-brand-name": 61,
+    "oppo-find-reno-device": 75,
+    "realme-brand-name": 307,
+    "realme-rmx-model": 68,
+    "redmagic-brand-name": 9,
+    "rugged-export-brand-names": 120,
+    "rugged-export-model-names": 9,
+    "taiwan-oem-brand-and-series-names": 739,
+    "taiwan-oem-model-names": 366,
+    "tcl-brand-names": 958,
+    "tcl-model-prefix": 124,
+    "tecno-brand-name": 204,
+    "tecno-model-prefix": 115,
+    "tecno-series-model": 100,
+    "ulefone-armor-series": 104,
+    "vivo-brand-name": 182,
+    "vivo-internal-device-code": 224,
+    "vivo-legacy-model-device": 20,
+    "xiaomi-brand-names": 670,
+    "zte-brand-name": 294,
+    "zte-model-prefix": 429,
+    "zte-series-name": 216
+  },
+  "candidateRows": 9880,
+  "catalogCoveragePercent": 20.699,
+  "classifiedPairsBeforeCuratedExclusions": 9897,
+  "datasetId": "domestic-device-catalog-2026-08",
+  "devicesDbSha256": "f63718a8c3582f4b3cfc68054ac141ce40d0157e0ccd3283bf13d3fc33da7058",
+  "excludedCuratedPairs": 17,
+  "policy": "CANDIDATE_ONLY",
+  "region": "MULTI_REGION",
+  "rulesSha256": "281cb07df6dde1bbc951adccea41802fd9cadcfa62add9746fc01811eed1fb0c",
+  "schema": "trustattestor.domestic-oem-coverage/v1",
+  "sourceRows": 53000,
+  "topUnclassifiedNameTokens": [
+    {
+      "rows": 3223,
+      "token": "galaxy"
+    },
+    {
+      "rows": 686,
+      "token": "lg"
+    },
+    {
+      "rows": 566,
+      "token": "smart"
+    },
+    {
+      "rows": 531,
+      "token": "xperia"
+    },
+    {
+      "rows": 300,
+      "token": "tab"
+    },
+    {
+      "rows": 239,
+      "token": "aquos"
+    },
+    {
+      "rows": 178,
+      "token": "elite"
+    },
+    {
+      "rows": 175,
+      "token": "optimus"
+    },
+    {
+      "rows": 158,
+      "token": "android"
+    },
+    {
+      "rows": 158,
+      "token": "nokia"
+    },
+    {
+      "rows": 146,
+      "token": "m10"
+    },
+    {
+      "rows": 141,
+      "token": "bq"
+    },
+    {
+      "rows": 114,
+      "token": "canvas"
+    },
+    {
+      "rows": 102,
+      "token": "primo"
+    },
+    {
+      "rows": 98,
+      "token": "note"
+    },
+    {
+      "rows": 95,
+      "token": "one"
+    },
+    {
+      "rows": 93,
+      "token": "hs"
+    },
+    {
+      "rows": 86,
+      "token": "g"
+    },
+    {
+      "rows": 85,
+      "token": "r4"
+    },
+    {
+      "rows": 85,
+      "token": "flare"
+    },
+    {
+      "rows": 84,
+      "token": "sky"
+    },
+    {
+      "rows": 83,
+      "token": "x"
+    },
+    {
+      "rows": 82,
+      "token": "archos"
+    },
+    {
+      "rows": 79,
+      "token": "ilium"
+    },
+    {
+      "rows": 78,
+      "token": "pad"
+    },
+    {
+      "rows": 78,
+      "token": "digma"
+    },
+    {
+      "rows": 77,
+      "token": "r3"
+    },
+    {
+      "rows": 74,
+      "token": "power"
+    },
+    {
+      "rows": 71,
+      "token": "4k"
+    },
+    {
+      "rows": 65,
+      "token": "philips"
+    },
+    {
+      "rows": 61,
+      "token": "studio"
+    },
+    {
+      "rows": 61,
+      "token": "eluga"
+    },
+    {
+      "rows": 59,
+      "token": "impress"
+    },
+    {
+      "rows": 59,
+      "token": "jvc"
+    },
+    {
+      "rows": 59,
+      "token": "arrows"
+    },
+    {
+      "rows": 58,
+      "token": "aqua"
+    },
+    {
+      "rows": 57,
+      "token": "m"
+    },
+    {
+      "rows": 54,
+      "token": "v"
+    },
+    {
+      "rows": 54,
+      "token": "bolt"
+    },
+    {
+      "rows": 54,
+      "token": "pixel"
+    },
+    {
+      "rows": 53,
+      "token": "m7"
+    },
+    {
+      "rows": 51,
+      "token": "gravity"
+    },
+    {
+      "rows": 51,
+      "token": "via"
+    },
+    {
+      "rows": 51,
+      "token": "l"
+    },
+    {
+      "rows": 50,
+      "token": "sharp"
+    },
+    {
+      "rows": 50,
+      "token": "droid"
+    },
+    {
+      "rows": 50,
+      "token": "hyundai"
+    },
+    {
+      "rows": 50,
+      "token": "inoi"
+    },
+    {
+      "rows": 48,
+      "token": "eu"
+    },
+    {
+      "rows": 48,
+      "token": "im"
+    }
+  ],
+  "validDeviceModelPairs": 47813
+}

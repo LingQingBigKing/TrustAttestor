@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_step_icon_anim" type="id" />
+    <item name="tag_step_chip_anim" type="id" />
+    <item name="tag_step_glow_anim" type="id" />
+    <item name="tag_step_rail_anim" type="id" />
+    <item name="tag_step_card_anim" type="id" />
+    <item name="tag_step_accent" type="id" />
+</resources>
