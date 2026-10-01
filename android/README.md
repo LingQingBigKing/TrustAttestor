@@ -1,87 +1,105 @@
-# TrustAttestor
+# TrustAttestor Android
 
-[English](README_EN.md) · [Cloud backend](../cloud/) · [MIT License](../LICENSE)
+[返回项目主页](../README.md) · [Cloud 后端](../cloud/README.md) · [MIT License](../LICENSE) · [Telegram 频道 @TrustAttestor](https://t.me/TrustAttestor)
 
-TrustAttestor 是一款面向 Android 安全研究、设备自检与风控辅助分析的开源设备可信度检测工具。它把 Android Key Attestation、KeyMint/Keystore、系统完整性、运行环境和可选的云端校验组合成可解释的分层报告，而不是只输出一个无法追溯的分数。
+TrustAttestor Android 是本项目的本地扫描客户端。它不把一次 API 调用当作“真相”，而是对多个独立来源做能力感知的采集、交叉验证和相对对照，并在 UI 中保留检测项的 `probeId`、状态、证据和失败原因。
 
-当前客户端版本为 **v1.5**（versionCode 15），最低支持 Android 8.1（API 27），仅构建 `arm64-v8a`。
+当前客户端版本为 **v1.5**（`versionCode 15`），最低支持 Android 8.1（API 27），Release 发布构建目标为 `arm64-v8a`。
 
-> 检测结果只代表当前实现能够观察到的证据，不能替代专业取证、厂商安全结论或服务端风控策略。ROM 差异、权限限制和系统负载都可能使部分探针不可用。
+> 检测结果只描述当前设备、当前系统和当前实现能够观察到的证据。ROM、厂商 KeyMint、内核、权限、系统负载和第三方服务差异都可能使探针不可用。`UNAVAILABLE` 不等于异常，也不等于通过。
 
-## 功能概览
+## 检测结果
 
-TrustAttestor 按 L0–L3 展示检测结果：
-
-| 层级 | 范围 | 示例 |
-| --- | --- | --- |
-| L0 | 硬件证明 | X.509 证明链、Root of Trust、授权列表、KeyMint/Keystore 行为与状态 |
-| L1 | 系统完整性 | APK/Native 身份、SELinux、注入与 Hook 痕迹、映射一致性 |
-| L2 | 设备环境 | 隔离进程、运行环境、挂载关系、TEE 模拟和异常包目录遍历行为 |
-| L3 | 云端证明（可选） | 证书吊销、泄露 Keybox、证明一致性、设备目录与内核策略 |
-
-主要特性：
-
-- 解析 Android Key Attestation 与 EAT 证明，并展示证书链、授权列表和安全级别。
-- 对 Device Properties、AttestKey、StrongBox、用户认证、KeyMint 参数和 Keystore 状态执行能力感知的差分检查。
-- 检查 Root of Trust 与系统属性之间的矛盾，区分异常、警告和环境不可用。
-- 提供 Native 完整性、Frida/Hook、SELinux、挂载拓扑、隔离进程和 TEE 模拟相关探针。
-- 使用同设备相对对照和重复性约束执行 Keystore 时序检查，避免使用跨设备固定延迟阈值。
-- 支持中英文界面、结构化证据、JSON 报告导出和独立 UI 预览工程。
-- 用户明确开启后，可调用独立的 TrustAttestor Cloud 完成 L3 签名裁决。
-
-## 结果语义
-
-每个检测项都使用稳定的 `probeId` 和四种状态：
+每个检测项使用稳定的 `probeId` 和四种状态：
 
 | 状态 | 含义 |
 | --- | --- |
-| `CLEAN` | 当前证据未发现异常 |
-| `DETECTED` | 发现满足规则的异常证据 |
-| `WARNING` | 发现需要关注、但不足以直接判异常的证据 |
-| `UNAVAILABLE` | 平台不支持、权限不足、接口失败或证据不完整 |
+| `CLEAN` | 探针执行完成，当前规则没有发现异常证据 |
+| `DETECTED` | 发现满足规则的异常证据；详情中应包含观测值或失败边界 |
+| `WARNING` | 有线索需要关注，但证据不足以直接判定异常 |
+| `UNAVAILABLE` | 平台不支持、权限不足、超时、接口错误或证据不完整 |
 
-只有 `DETECTED` 计入异常。`UNAVAILABLE` 不等同于设备异常，也不能被当作通过。
+只有 `DETECTED` 计入异常统计。检测失败、接口不支持和不完整证据必须保持为 `UNAVAILABLE`，不能为了让摘要“看起来完成”而升级为异常。
+
+## 四个检测板块
+
+### 1. 设备环境
+
+这一板块由 Native checker 直接读取系统调用、`/proc`、挂载信息、系统属性和受控子进程行为，关注用户态隐藏和运行环境改变：
+
+- **启动与存储状态**：读取 bootloader/VBMeta 属性，检查解锁、AVB 属性缺失、数据分区未加密、debug ramdisk 和隐藏 ext4 loop 镜像等线索。
+- **Root 与工具痕迹**：检查 `su`、BusyBox、Shizuku、GameGuardian、ADB root 等已知路径或属性；这些是线索，不单独等价于完整 Root 结论。
+- **KernelSU/APatch/ZYGISK**：检查 KernelSU 驱动 FD/UAPI、KSU/APatch 挂载源、`/sys/module/kernelsu` 等路径，以及 Zygisk 隔离/附加行为和相关 mount 残留。
+- **包目录遍历观察**：从当前应用自身的已安装 APK `sourceDir` 解析包目录，使用 inotify 观察目录打开、访问、命名子项噪声、watch 丢失和队列溢出。该项只在路径合法且位于受支持的已安装应用根目录时运行；发现符合恢复扫描特征的异常遍历才返回 `DETECTED`，路径不支持或观察失败返回 `UNAVAILABLE`。
+- **挂载与 namespace**：比较 mountinfo 的 source/target/filesystem、挂载传播关系、peer group、周边路径和子进程看到的挂载视图；incFS、厂商布局和正常安装目录差异必须先满足兼容条件，不能仅因存在不同挂载类型就判异常。
+- **系统属性与 proc 读取**：对 property area/layout、持久化可疑属性、`/proc` 访问链、读取时序和 namespace mismatch 做一致性检查。
+- **内核与进程行为**：比较 `uname`、`/proc` 和 Java `os.version` 的内核身份，检查受控 fork/ptrace、进程回收、匿名可执行内存、映射 inode 和运行时注入路径。
+- **TEE 模拟与相关服务**：检查 TeeSim/RS Soter 管理协议、控制 socket、策略/SELinux 线索和已知服务端点；缺少服务不能直接作为异常。
+
+相关 `probeId` 示例：`device.bootloader.unlocked`、`device.root.kernelsu`、`device.root.kernelsu.throne_hunt`、`system.mount.peer_group`、`system.mount.inconsistent`、`system.readproc.tricky_store`、`system.readproc.teesim_rs_daemon`、`device.kernel.identity_spoofing`。
+
+### 2. 系统完整性
+
+这一板块检查应用自身及系统强制访问边界，而不是只查几个 Root 文件：
+
+- 校验 APK 的包名、代码/资源路径、安装来源路径和签名块结构，检查应用身份、映射 inode、运行时加载路径和 Native 完整性。
+- 检查 SELinux enforcing 状态、策略视图、AV decision/status 通道、`system_server` execmem、AOSP su、Magisk/KernelSU/APatch/LSPosed/Xposed/ZYGISK Next 等策略线索。
+- 检查 App Zygote/隔离进程服务、接口 token、Binder/服务边界和进程启动/回收行为；隔离探针的授权链读取失败会明确标记为不可用，不伪装成通过。
+- 检查可执行匿名内存、运行时注入路径、系统服务 Hook、Sui/superuser/LSPosed bridge 等环境证据。
+
+相关 `probeId` 示例：`system.selinux.permissive`、`system.selinux.kernelsu_policy`、`system.selinux.teesim_keystore_policy`、`system.app_zygote.process`、`system.app_zygote.sepolicy`、`system.permission.boundary`、`system.runtime.injection_path`、`system.service.system_server_hook`。
+
+### 3. 硬件证明
+
+这一板块通过 Android Keystore/KeyMint 公共 API、Keystore2 Binder 和临时密钥完成硬件能力与证明结构检查。所有密钥都由本次调用生成并在结束时清理，不读取用户已有密钥材料：
+
+- **证书链和 Root of Trust**：解析 X.509 链、Google/OEM 信任锚、签名链、证书有效期、叶证书约束、应用身份、签名 lineage、补丁级别、KeyMint/Keymaster 版本和安全级别。
+- **Root of Trust 与系统属性**：比较证书中的 deviceLocked、verifiedBootState、verifiedBootKey、VBMeta digest 等与 `ro.boot.*` / Build 属性；不把“TEE 与系统属性不一致”隐藏成笼统的硬件异常。
+- **Device Properties**：在声明能力且满足 SDK 条件时，生成带挑战和普通对照密钥，检查返回的设备属性是否完整、是否可重复；ProviderException、缺少能力或两次失败属于不可用，不能直接当作伪造证据。
+- **AttestKey 与 KeyDescriptor**：检查 AttestKey 链结构、KEY_ID 描述符、委派签名密钥、keyId 正负/缺失、服务替代和来源一致性。Keystore2 返回的明确服务错误会保留在证据中。
+- **强约束与负向输入**：使用无挑战、超大挑战、空挑战、非法授权组合和单次使用场景，检查 KeyMint 是否拒绝不允许的参数以及拒绝是否可重复。
+- **StrongBox 与硬件后端差分**：在设备声明 StrongBox 时比较 TEE/StrongBox 的能力、链和安全级别；不支持 StrongBox 时返回能力不可用，而不是异常。
+- **用户认证与元数据**：检查授权列表、用户认证类型/超时、per-use 认证、KeyInfo 安全级别和密钥元数据是否与生成参数一致。
+- **算法和操作约束**：对 RSA-PSS/OAEP、AES-GCM/CBC、HMAC、ECDH/ECDSA 等做合法往返、分段输入、AAD/tag 完整性、摘要/填充和共享秘密对照；合法控制样本失败时不升级为硬件异常。
+- **Keystore 状态与时序**：检查状态机/账本、别名隔离、交叉签名、证书记录 round-trip、Binder locality、接口 token、单次策略和读取路径。时序项使用同设备重复采样、普通密钥负对照和稳定性约束；样本不足、方向不稳定或超时为 `UNAVAILABLE`。
+- **TEE/KeyMint 参数指纹**：比较可重复的参数/能力组合和返回结构，区分真正的约束冲突、ProviderException 与单次资源竞争，避免把正常设备的能力差异判为异常。
+
+相关 `probeId` 示例：`hardware.attestation.device_properties`、`hardware.attestation.root_of_trust_state`、`hardware.attestation.attest_key_descriptor_delegation`、`hardware.attestation.strongbox_differential`、`hardware.attestation.user_auth_policy`、`hardware.attestation.keymint_boundary`、`hardware.attestation.parameter_fingerprint`、`hardware.attestation.teesim_parameter_fingerprint`、`hardware.attestation.keystore_ledger`、`hardware.attestation.keystore_timing`。
+
+### 4. 云端证明（L3，可选）
+
+用户同意并开启后，客户端生成一次性 challenge，将完成证明所需的数据发送到配置的 TrustAttestor Cloud，并在本地验证服务器 P-256 签名。云端会：
+
+- 验证 Android 证明证书链、challenge、应用包名/签名身份和证书有效期。
+- 查询 Google 吊销数据以及经审核的泄露 Keybox 特征。
+- 只对识别为 TEE 中间 CA 的 Subject 原始 DER `RDNSequence` 检查已审核格式及逆序关系；不会对任意 CA 或叶/根证书套用该规则。
+- 检查设备目录、构建/TEE 版本、补丁级别、Root of Trust、内核兼容性和多来源观测共识。
+- 在规则、数据源或网络不可用时返回 `UNAVAILABLE`，不默认判异常。
+
+云端规则和请求字段见 [`../cloud/README.md`](../cloud/README.md)。
 
 ## 仓库结构
 
-| 路径 | 内容 |
-| --- | --- |
-| `app/` | Android 应用、Material 界面、JNI 入口和 Native 检测 |
-| `dex/` | Key Attestation、KeyMint/Keystore 探针、证书解析和宿主测试 |
-| `stub/` | 编译隐藏 Android 平台接口所需的最小桩定义 |
-| `TrustAttestor-UI/` | 可独立构建的 UI 预览与同步工具，不执行真实检测 |
-| `app/src/main/cpp/checker/` | 拆分后的 Native 检测实现 |
-
-`app/src/main/cpp/external/fmt` 是 Git submodule。克隆时请初始化子模块。
-
-## 构建环境
-
-- JDK 17
-- Android SDK Platform 35
-- Android Build Tools 35.0.0（DEX 工具链还会读取 35.0.1 的 `d8.jar`）
-- Android NDK 27.2.12479018
-- CMake（由 Android SDK 安装）
-
-```bash
-git clone --recurse-submodules https://github.com/LingQingBigKing/TrustAttestor.git
-cd TrustAttestor/android
+```text
+android/
+├─ app/                         # Android 应用、UI、JNI 入口和 Native checker
+│  └─ src/main/cpp/checker/     # 分拆的系统、挂载、进程和环境检测
+├─ dex/                         # Key Attestation、Keystore2、证书与 host 回归测试
+├─ stub/                        # 隐藏 Android 平台接口的最小编译桩
+└─ TrustAttestor-UI/            # 不执行真实检测的独立 UI 预览工程
 ```
 
-用 Android Studio 打开项目，或在本机 `local.properties` 中配置 SDK：
+`app/src/main/cpp/external/fmt` 是 Git submodule。克隆时使用 `--recurse-submodules`，或执行 `git submodule update --init --recursive`。
+
+## 兼容性与构建
+
+需要 JDK 17、Android SDK Platform 35、Build Tools 35.0.0（DEX 流程还会读取 35.0.1 的 `d8.jar`）、NDK 27.2.12479018 和 SDK 提供的 CMake。先在 `android/local.properties` 配置 SDK：
 
 ```properties
 sdk.dir=/absolute/path/to/Android/Sdk
 ```
 
-Windows：
-
-```powershell
-.\gradlew.bat :dex:check
-.\gradlew.bat :app:testDebugUnitTest
-.\gradlew.bat :app:assembleDebug
-```
-
-macOS / Linux：
+Debug：
 
 ```bash
 ./gradlew :dex:check
@@ -89,54 +107,22 @@ macOS / Linux：
 ./gradlew :app:assembleDebug
 ```
 
-Release 构建需要自己的 JKS。复制 `keystore.properties.example` 为 `keystore.properties` 并填写本机值；该文件已被 Git 忽略：
+Windows 使用 `gradlew.bat`。Release 需要自己的 JKS；将 `keystore.properties.example` 复制为被忽略的 `keystore.properties`，填入本机路径和密码后执行 `:app:assembleRelease`。不要把签名文件或 APK 放入仓库。
 
-```properties
-androidStoreFile=/absolute/path/to/release-signing.jks
-androidStorePassword=...
-androidKeyAlias=...
-androidKeyPassword=...
-```
-
-然后执行：
-
-```powershell
-.\gradlew.bat :app:assembleRelease
-```
-
-### 编译与字节码处理
-
-项目已移除 Skidfuscator、LSParanoid 和 OLLVM 等自定义混淆配置。Debug 与 Release 均使用 Android Gradle Plugin 自带的标准 R8/D8 流程，不读取开发者工作站上的外部混淆器目录；这使得干净克隆可以复现构建。
-
-## 云端证明
-
-客户端默认配置的公开接口为 `https://api.lingqing.ltd`。L3 仅在用户主动启用并确认数据说明后运行。客户端会生成一次性挑战证明，并在本地验证云端 P-256 签名后才接受裁决。
-
-后端源码、协议和自建说明见仓库内的 [cloud/](../cloud/) 目录。自建后端时可通过 Gradle 属性替换接口和验证公钥：
-
-```properties
-trustAttestorCloudUrl=https://your-worker.example
-trustAttestorCloudVerdictPublicKey=<base64-spki>
-```
+项目使用 Android Gradle Plugin 自带的标准 R8/D8 流程；Skidfuscator、LSParanoid、OLLVM 和检测器内嵌反调试配置已移除。独立反调试示例不属于此客户端，也不会被编译或加载。
 
 ## UI 预览工程
 
-`TrustAttestor-UI` 不声明网络权限，不加载 Native 检测库，也不会访问生产服务。它用于在 Android Studio 中独立开发界面、文案、动画和报告展示。同步方法和边界见其目录内的 `README.md`。
+`TrustAttestor-UI` 只用于界面、文案、动画和报告展示，不加载 Native 检测库，不访问生产服务，也不执行真实设备检测。详见 [`TrustAttestor-UI/README.md`](TrustAttestor-UI/README.md)。
 
-## 隐私与安全
+## 隐私和贡献规则
 
-- L0–L2 在设备本地运行。
-- L3 是可选功能；提交内容限于完成证明所需的证书链、签名报告和设备元数据。
-- Release 不返回或展示完整调试证据。
-- 仓库不应包含签名密钥、Cloudflare 私钥、`.dev.vars`、`keystore.properties` 或真实设备报告。
-- 如发现安全问题，请优先通过 GitHub Security Advisory 私下报告，避免在公开 Issue 中附带密钥、证书私钥或可识别设备的数据。
-
-## 参与开发
-
-提交修改前请至少运行与变更相关的单元测试和 Gradle 检查。检测规则应保持保守、可复现并提供可解释证据；平台不支持和瞬态失败应返回 `UNAVAILABLE`，不得直接升级为异常。
-
-项目包含或参考 AOSP、[KeyAttestation](https://github.com/vvb2060/KeyAttestation)、LSPosed 组件、fmt 与 musl。第三方代码继续遵循各自目录或上游项目的许可证。
+- L0–L2 默认在设备本地运行；L3 只有在用户主动启用并接受说明后运行。
+- 不上传签名私钥、完整 Keybox 或与证明无关的个人数据。
+- 不要提交 `keystore.properties`、`local.properties`、`.dev.vars`、Cloudflare 私钥、真实设备报告和本地构建目录。
+- 新检测项必须说明证据来源、误报边界、不可用条件和测试方式；不能用固定跨设备延迟阈值替代同设备对照。
+- 安全问题请通过 GitHub Security Advisory 私下报告。
 
 ## 许可证
 
-项目自有代码以 [MIT License](../LICENSE) 开源。第三方组件不因本许可证而改变其原有许可。
+项目自有代码以 [MIT License](../LICENSE) 开源。AOSP、KeyAttestation、fmt、musl 和其他第三方代码继续遵循各自许可证。

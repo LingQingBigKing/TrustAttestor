@@ -1,76 +1,106 @@
-# TrustAttestor
+# TrustAttestor Android
 
-[简体中文](README.md) · [Cloud backend](../cloud/) · [MIT License](../LICENSE)
+[Project home](../README_EN.md) · [Cloud backend](../cloud/README_EN.md) · [MIT License](../LICENSE) · [Telegram @TrustAttestor](https://t.me/TrustAttestor)
 
-TrustAttestor is an open-source Android device trust diagnostics tool for security research, device self-checks, and risk-analysis support. It combines Android Key Attestation, KeyMint/Keystore behavior, system integrity, runtime evidence, and optional cloud verification into an explainable layered report.
+TrustAttestor Android is the local scanning client. It collects evidence from Android Key Attestation, KeyMint/Keystore, system integrity, mount/process state, and controlled native probes. Each check keeps a stable `probeId`, state, evidence, and availability reason.
 
-The current client is **v1.5** (versionCode 15), supports Android 8.1 / API 27 and later, and targets `arm64-v8a`.
+The current client is **v1.5** (`versionCode 15`), supports Android 8.1 / API 27 and later, and release builds target `arm64-v8a`.
 
-> A result describes only the evidence observable by this implementation. It is not a substitute for professional forensics, a vendor security statement, or a complete risk policy. ROM differences, missing privileges, and system load may make individual probes unavailable.
+> Results describe evidence observable by this implementation on the current device and system. OEM KeyMint behavior, ROM, kernel, permissions, and load can make probes unavailable. `UNAVAILABLE` is neither an anomaly nor a pass.
 
-## Detection layers
+## Result states
 
-| Layer | Scope | Examples |
-| --- | --- | --- |
-| L0 | Hardware attestation | X.509 chain, Root of Trust, authorization lists, KeyMint/Keystore behavior |
-| L1 | System integrity | APK/native identity, SELinux, injection and hook evidence, mapping consistency |
-| L2 | Device environment | Isolated processes, mount topology, TEE simulation, anomalous package-directory traversal |
-| L3 | Optional cloud attestation | Revocation, leaked keyboxes, attestation consistency, device catalog and kernel policy |
-
-Findings use stable `probeId` values and four states: `CLEAN`, `DETECTED`, `WARNING`, and `UNAVAILABLE`. Only `DETECTED` is counted as an anomaly. `UNAVAILABLE` means the probe could not produce complete evidence; it is neither a pass nor a detection.
-
-## Repository layout
-
-| Path | Purpose |
+| State | Meaning |
 | --- | --- |
-| `app/` | Android app, Material UI, JNI entry points, and native checks |
-| `dex/` | Key Attestation, KeyMint/Keystore probes, certificate parsing, and host tests |
-| `stub/` | Minimal stubs for hidden Android platform APIs |
-| `TrustAttestor-UI/` | Standalone UI preview and synchronization tools |
-| `app/src/main/cpp/checker/` | Native detector implementation |
+| `CLEAN` | The probe completed and found none of its defined anomaly evidence |
+| `DETECTED` | The rule found repeatable, explainable evidence that meets its threshold |
+| `WARNING` | A signal needs attention but is not strong enough to classify as an anomaly |
+| `UNAVAILABLE` | Unsupported platform, missing permission, timeout, interface failure, or incomplete evidence |
 
-`app/src/main/cpp/external/fmt` is a Git submodule.
+Only `DETECTED` contributes to the anomaly count. A failed or unsupported probe must remain `UNAVAILABLE`.
 
-## Build
+## Detection areas
 
-Requirements:
+### Device environment
 
-- JDK 17
-- Android SDK Platform 35
-- Android Build Tools 35.0.0 and 35.0.1
-- Android NDK 27.2.12479018
-- CMake from the Android SDK
+The native checker reads system calls, `/proc`, mount information, properties, and controlled child-process behavior:
+
+- bootloader/VBMeta properties, encryption state, debug ramdisk, hidden ext4 loop images, and mount remnants;
+- `su`, BusyBox, Shizuku, GameGuardian, ADB-root, KernelSU/APatch driver or UAPI traces, and Zygisk-related mount/process evidence;
+- package-directory traversal observation using inotify on the current app's safe installed-APK parent directory, including directory opens/access, named-child noise, queue overflow, and watch loss;
+- mount source/target/filesystem, propagation and peer-group relationships, namespace differences, and incFS/vendor-layout compatibility gates;
+- property-area consistency, `/proc` access chains/timing, kernel identity (`uname`/`/proc`/Java), process reaping, executable mappings, and runtime injection paths;
+- TeeSim/RS-Soter endpoints and service/policy traces, without treating an absent optional service as proof of tampering.
+
+Example IDs include `device.root.kernelsu`, `device.root.kernelsu.throne_hunt`, `system.mount.peer_group`, `system.mount.inconsistent`, `system.readproc.tricky_store`, and `device.kernel.identity_spoofing`.
+
+### System integrity
+
+This layer checks more than well-known root paths:
+
+- APK package/code/resource paths, signing-block structure, mapping inode, native identity, and runtime loader paths;
+- SELinux enforcing state, policy views and status channels, `system_server` executable memory, and Magisk/KernelSU/APatch/LSPosed/Xposed/Zygisk policy traces;
+- App Zygote and isolated-process service/interface/Binder boundaries, process start/reap behavior, and authorization-chain availability;
+- executable anonymous memory, runtime injection, system-server hooks, Sui/superuser services, and LSPosed bridges.
+
+Example IDs include `system.selinux.permissive`, `system.selinux.kernelsu_policy`, `system.app_zygote.process`, `system.app_zygote.sepolicy`, `system.permission.boundary`, and `system.runtime.injection_path`.
+
+### Hardware attestation
+
+The client creates temporary keys for each invocation and cleans them up. It does not inspect user-owned key material:
+
+- X.509 chain, trust anchor, signature graph, validity, leaf constraints, application identity, signing lineage, patch levels, KeyMint/Keymaster version, and security level;
+- Root of Trust fields (`deviceLocked`, verified boot state/key, and VBMeta digest) compared with `ro.boot.*` and build properties;
+- capability-gated Device Properties differential checks with challenge, ordinary-key control, retry, and repeatability rules;
+- AttestKey chain structure and Keystore2 `KEY_ID` descriptor delegation, including incomplete/negative key IDs, delegated signing output, service substitution, and source consistency;
+- challenge/authorization boundary probes, StrongBox-vs-TEE differentials, user-auth metadata/policy, and key metadata/security-level checks;
+- RSA-PSS/OAEP, AES-GCM/CBC, HMAC, ECDH/ECDSA legal round trips, chunking, AAD/tag integrity, digest/padding constraints, and negative inputs;
+- Keystore ledger/state machine, alias isolation, cross-signing, certificate-record round trips, Binder locality, interface tokens, single-use policy, read-path timing, and same-device timing controls;
+- repeatable KeyMint/TEE parameter fingerprints, distinguishing actual constraint conflicts from ProviderException, resource contention, or insufficient samples.
+
+Example IDs include `hardware.attestation.device_properties`, `hardware.attestation.root_of_trust_state`, `hardware.attestation.attest_key_descriptor_delegation`, `hardware.attestation.strongbox_differential`, `hardware.attestation.user_auth_policy`, `hardware.attestation.parameter_fingerprint`, `hardware.attestation.teesim_parameter_fingerprint`, `hardware.attestation.keystore_ledger`, and `hardware.attestation.keystore_timing`.
+
+### Optional cloud attestation (L3)
+
+After consent, the client creates a one-time challenge, sends only the data required by the configured service, and verifies the returned P-256 signature locally. The service verifies the chain, challenge, application identity, revocation/Keybox rules, TEE intermediate-CA RDN encoding profiles, device/build consistency, kernel policy, and reviewed observation consensus. Missing data or policy returns `UNAVAILABLE`, not an automatic anomaly. See [`../cloud/README_EN.md`](../cloud/README_EN.md).
+
+## Source layout
+
+```text
+android/
+├─ app/                         # Android app, UI, JNI, and native checker
+│  └─ src/main/cpp/checker/     # Native system, mount, process, and environment probes
+├─ dex/                         # Key Attestation, Keystore2, certificate, and host tests
+├─ stub/                        # Minimal hidden-platform API stubs
+└─ TrustAttestor-UI/            # UI-only preview application
+```
+
+`app/src/main/cpp/external/fmt` is a Git submodule. Clone with `--recurse-submodules` or run `git submodule update --init --recursive`.
+
+## Compatibility and build
+
+Requirements: JDK 17, Android SDK Platform 35, Build Tools 35.0.0 (the DEX flow also reads the 35.0.1 `d8.jar`), NDK 27.2.12479018, and SDK CMake. Configure `android/local.properties` with your SDK path:
+
+```properties
+sdk.dir=/absolute/path/to/Android/Sdk
+```
 
 ```bash
-git clone --recurse-submodules https://github.com/LingQingBigKing/TrustAttestor.git
-cd TrustAttestor/android
 ./gradlew :dex:check
 ./gradlew :app:testDebugUnitTest
 ./gradlew :app:assembleDebug
 ```
 
-On Windows, use `gradlew.bat`. A release build requires your own signing key. Copy `keystore.properties.example` to the ignored `keystore.properties`, fill in the values, and run:
+On Windows use `gradlew.bat`. Release builds require your own JKS and ignored `keystore.properties`, copied from `keystore.properties.example`. Keep signing files, APKs, DEX, and logs outside the repository.
 
-```bash
-./gradlew :app:assembleRelease
-```
+The project uses the standard Android Gradle Plugin R8/D8 pipeline. Skidfuscator, LSParanoid, OLLVM, and detector-embedded anti-debug configuration have been removed. The standalone anti-debug example is not part of this client.
 
-The custom Skidfuscator, LSParanoid, and OLLVM integrations have been removed. Debug and Release use the standard Android Gradle Plugin R8/D8 pipeline and do not read an external obfuscator checkout, so a clean clone has a reproducible build path.
+## UI preview and privacy
 
-## Cloud attestation
+`TrustAttestor-UI` is a standalone UI/text/animation preview. It does not load the native detector, access production services, or perform real device checks; see [`TrustAttestor-UI/README.md`](TrustAttestor-UI/README.md).
 
-L3 runs only after the user enables it and accepts the disclosure. The client creates a one-time attestation challenge and accepts a verdict only after verifying the server's P-256 signature locally. Protocol details and self-hosting instructions are in the repository's [cloud/](../cloud/) directory.
-
-## Privacy and security
-
-- L0–L2 run locally on the device.
-- L3 is optional and sends the certificate chain, signed report, and device metadata required for verification.
-- Release builds do not expose full debug evidence.
-- Signing keys, Cloudflare secrets, `.dev.vars`, `keystore.properties`, and real device reports must never be committed.
-- Please report vulnerabilities through a private GitHub Security Advisory and do not attach secrets or identifiable device data to public issues.
-
-Third-party code and references include AOSP, [KeyAttestation](https://github.com/vvb2060/KeyAttestation), LSPosed components, fmt, and musl. Their own licenses continue to apply.
+L0–L2 run locally. L3 is opt-in. Do not commit signing keys, `.dev.vars`, Cloudflare private keys, real Keyboxes, or identifiable device reports. Report security issues privately through GitHub Security Advisory.
 
 ## License
 
-Project-owned code is released under the [MIT License](../LICENSE). Third-party components remain under their respective licenses.
+Project-owned code is released under the [MIT License](../LICENSE). AOSP, KeyAttestation, fmt, musl, and other third-party code retain their own licenses.

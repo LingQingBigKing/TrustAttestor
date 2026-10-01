@@ -1,15 +1,15 @@
 # TrustAttestor
 
-[English](README_EN.md) · [MIT License](LICENSE)
+[English](README_EN.md) · [Android 客户端](android/README.md) · [Cloud 后端](cloud/README.md) · [MIT License](LICENSE) · [Telegram 频道 @TrustAttestor](https://t.me/TrustAttestor)
 
-TrustAttestor 是面向 Android 安全研究、设备自检与风控辅助分析的开源可信度检测项目。客户端和云端验证服务位于同一个仓库的不同目录。
+TrustAttestor 是一个 Android 设备可信度诊断项目。它将硬件证明、系统完整性、运行环境和可选的云端校验分开采集，并为每个检测项保留状态、证据和限制条件。它不是一个只输出“安全/不安全”的黑盒评分器。
 
-| 目录 | 内容 |
-| --- | --- |
-| [`android/`](android/README.md) | Android 客户端、Native 检测器、KeyMint/Keystore 探针和 UI 预览 |
-| [`cloud/`](cloud/README.md) | Cloudflare Workers 云端证明、吊销/Keybox 规则、设备目录与测试 |
+## 两个组成部分
 
-客户端当前版本为 **v1.5**，支持 Android 8.1（API 27）及以上，仅构建 `arm64-v8a`。检测结果是可观察证据的汇总，不代表绝对安全结论；平台不支持或探针不可用不应被当作异常或通过。
+| 目录 | 作用 | 适合阅读 |
+| --- | --- | --- |
+| [`android/`](android/README.md) | 本地扫描、Key Attestation、KeyMint/Keystore 探针、Native 检测和结果展示 | 客户端构建、检测原理、结果解释 |
+| [`cloud/`](cloud/README.md) | 可选的 Cloudflare Workers 证明服务、吊销/Keybox 规则和设备目录 | API、自建部署、规则和数据维护 |
 
 ## 快速开始
 
@@ -20,9 +20,9 @@ cd TrustAttestor/android
 ./gradlew :app:assembleDebug
 ```
 
-Windows 使用 `gradlew.bat`。需要 JDK 17、SDK Platform 35、Build Tools 35.0.0/35.0.1、NDK 27.2.12479018 和 CMake。Release 使用开发者自己的 JKS；详细配置见 [Android 文档](android/README.md)。
+Windows 使用 `gradlew.bat`。Android 的 JDK、SDK、NDK、CMake 和 Release 签名配置见 [Android README](android/README.md)。
 
-云端开发（从仓库根目录执行）：
+云端开发：
 
 ```bash
 cd cloud
@@ -31,14 +31,37 @@ pnpm install
 pnpm run check
 ```
 
-部署与协议说明见 [云端文档](cloud/README.md)。部署自建实例必须使用自己的密钥、数据库和域名。
+部署自己的 Cloudflare 实例前，请阅读 [Cloud README](cloud/README.md)，使用自己的账号、数据库、域名和 Secrets。
 
-## 构建与隐私
+## 检测结果的共同语义
 
-自定义混淆器配置和检测器内的自保护反调试逻辑已经移除。Android 使用标准 R8/D8 工具链；独立反调试示例不包含在本仓库，也不会被客户端编译或加载。
+本地和云端报告都使用四种状态：
 
-不要提交签名密钥、调试 keystore、`keystore.properties`、`local.properties`、Cloudflare 私钥、`.dev.vars`、真实 Keybox 或设备报告。安全问题请通过 GitHub Security Advisory 私下报告，避免在公开 Issue 中附带敏感材料。
+| 状态 | 含义 |
+| --- | --- |
+| `CLEAN` | 检测已完成，当前规则未发现异常证据 |
+| `DETECTED` | 发现满足规则、可解释且应进一步查看的异常证据 |
+| `WARNING` | 有线索需要关注，但证据不足以直接判定异常 |
+| `UNAVAILABLE` | 不支持、权限不足、超时、接口失败或证据不完整 |
+
+只有 `DETECTED` 计入异常。`UNAVAILABLE` 不是异常，也不是通过；厂商实现、ROM、内核、系统负载和权限差异都可能使某些探针不可用。
+
+## 隐私、构建和安全
+
+- Android 的 L0–L2 检测默认在本地运行；云端 L3 只有在用户明确同意后才启用。
+- 云端请求包含完成证明所需的证书链和设备/构建元数据；客户端在本地验证服务器 P-256 签名。
+- 不要提交 JKS、`keystore.properties`、`local.properties`、Cloudflare Secrets、真实 Keybox、完整设备报告或个人数据。
+- APK、DEX、CMake/Gradle 输出和日志应保存在仓库外；仓库的 `.gitignore` 与 `pre-push` 检查会拦截常见构建产物。
+- 项目不保证发现所有修改环境，也不返回官方 Google Play Integrity API 结论。
+
+## 继续阅读与交流
+
+- [Android 检测项、架构、构建和本地隐私](android/README.md)
+- [Cloud API、规则、部署和数据维护](cloud/README.md)
+- [Telegram 频道 @TrustAttestor](https://t.me/TrustAttestor)
+
+安全问题请通过 GitHub Security Advisory 私下报告，不要在公开 Issue 或频道中附带私钥、真实 Keybox 或可识别设备数据。
 
 ## 许可证
 
-项目自有代码以 [MIT License](LICENSE) 开源。第三方组件继续遵循各自目录或上游项目的许可证。
+项目自有代码以 [MIT License](LICENSE) 开源。第三方组件、子模块和引用代码继续遵循其各自目录或上游项目的许可证。

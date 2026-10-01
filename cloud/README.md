@@ -1,84 +1,76 @@
 # TrustAttestor Cloud
 
-[Android client](../android/) · [MIT License](../LICENSE)
+[返回项目主页](../README.md) · [Android 客户端](../android/README.md) · [MIT License](../LICENSE) · [Telegram 频道 @TrustAttestor](https://t.me/TrustAttestor)
 
-TrustAttestor Cloud 是 TrustAttestor 的 L3 云端证明后端。它运行于 Cloudflare Workers，验证 Android 硬件证明、一次性挑战和客户端签名，查询 D1 中的吊销/Keybox/设备策略数据，并返回由 P-256 密钥签名的结构化裁决。
+TrustAttestor Cloud 是 Android 客户端可选的 L3 证明后端，运行在 Cloudflare Workers 上。它不替代本地检测，而是对客户端提交的证明链、一次性 challenge、应用身份和经授权的设备证据做服务端验证，并返回带 P-256 签名的结构化裁决。
 
-生产接口、数据库 ID 和发布签名摘要属于部署方配置，不写入公开源码；当前规则集版本为 **13**。公开源码不包含生产私钥、真实设备报告或发布证书摘要。
+自建实例必须使用自己的 Cloudflare 账号、D1 数据库、Durable Object、Queue、域名、签名密钥和数据来源。公开仓库不包含生产私钥、真实 Keybox、设备报告或数据库导出。
 
-> 本仓库提供可审计的验证逻辑与自建基础设施配置。部署自己的实例时必须使用自己的密钥、数据库和域名；不要把生产 Secrets 写入 Git、日志或 Issue。
+## 具体检查内容
 
-## 验证流程
+一次 `/v1/attest` 请求会按以下边界执行：
 
-一次完整请求经过以下步骤：
+1. **Challenge 绑定**：为包名、SDK 和规则版本签发短期、单次消费 challenge；当前实现的有效期为 120 秒。
+2. **客户端签名**：校验 canonical report、challenge 绑定和受信客户端签名摘要。
+3. **证书链**：检查 Android Key Attestation 扩展、证书链签名、Google/OEM 信任锚、P-256 要求和证书有效期。
+4. **应用身份**：核对证明中的包名、同 UID 包集合和签名摘要是否满足服务器配置的信任集合。
+5. **Root of Trust 与版本**：比较 Root of Trust、Android/TEE 版本、补丁级别、Build Fingerprint、构建时间线和内核信息的来源间一致性。
+6. **吊销与 Keybox**：检查 Google 吊销数据和经审核的 Keybox 强特征；只命中弱序列号时不直接给出高置信异常。
+7. **证书编码序列**：只检查链中非叶、非根且可识别为 TEE 的中间 CA；将 Subject 原始 DER `RDNSequence` 与已审核的多个格式及其逆序进行比较。
+8. **设备与内核策略**：检查设备目录、同一报告中的平台/SoC 属性一致性、内核风险特征和 Android/内核兼容性。
+9. **结果签名**：将各项 finding 汇总为 `CLEAN`、`DETECTED`、`WARNING` 或 `UNAVAILABLE` 后签名返回。
 
-1. 为指定应用签发两分钟有效、只能消费一次的 Durable Object challenge。
-2. 使用证明叶证书验证 canonical report 签名，并校验 challenge 绑定。
-3. 验证完整 Android Key Attestation 证书链及证明 challenge。
-4. 解析 KeyMint/Keymaster、AuthorizationList、Root of Trust 和应用身份。
-5. 执行吊销、Keybox、证书编码、设备/构建/内核一致性等独立规则。
-6. 汇总为 `CLEAN`、`DETECTED`、`WARNING` 或 `UNAVAILABLE`，并签名返回裁决及中英文展示数据。
-
-服务端返回结果仍需由 Android 客户端使用内置公钥验签。数据库或可选规则不可用不会伪装成异常。
-
-## Ruleset 13
-
-主要规则包括：
-
-- `cloud.attestation.google_revocation`：对已验证链中的证书检查 Google Android Attestation 吊销状态。
-- `cloud.keybox.serial_blacklist`：使用证书 SHA-256 或 SerialNumber + Issuer SPKI 等强身份匹配泄露 Keybox；仅序列号命中只产生警告。
-- `cloud.attestation.subject_rdn_order`：只检查非叶、非根且标识为 TEE 的 CA，匹配已审核 Subject RDN 模板的完整逆序，不把任意排列直接判异常。
-- `cloud.attestation.application_identity`：检查证明中的应用包名、版本和签名身份。
-- `cloud.attestation.certificate_validity`：检查证明链证书有效期与证明类型约束。
-- `cloud.device.catalog_consistency`：核对签名报告中的 `Build.DEVICE` / `Build.MODEL` 与设备目录。
-- `cloud.soc.catalog_consistency`：对 `ro.soc.model`、`ro.hardware`、board platform 与厂商信息做来源间一致性检查。
-- `cloud.tee.*` / `cloud.build.*`：比较 TEE 与用户态版本、补丁等级、Root of Trust、指纹和构建时间线。
-- `cloud.device.hardware_matrix`：只使用已审核并发布的设备变体基线；未知设备不会被推断为异常。
-- `cloud.kernel.risk_signatures` / `cloud.kernel.android_compatibility`：应用可更新的内核风险规则和保守的 Android/内核兼容检查。
-- `cloud.observation.consensus`：在满足来源数量与网络多样性门槛后，为已审核观测提供共识辅助。
-
-这里没有“设备型号 → SoC”的裁决基线。历史 `device_soc_baselines` 只为迁移和导入兼容保留，不参与设备判定；`cloud.soc.catalog_consistency` 只检查同一报告中多个 SoC/平台属性是否互相一致。
+云端没有“设备型号 → SoC”的单一裁决基线；`cloud.soc.catalog_consistency` 只比较同一报告里已有的 SoC/平台字段，缺少目录或证据不会自动判异常。
 
 ## API
 
-| 方法 | 路径 | 说明 |
+| 方法 | 路径 | 作用 |
 | --- | --- | --- |
-| `GET` | `/` | 健康状态与当前规则元数据 |
-| `GET` | `/v1/public-key` | 裁决验签公钥 |
+| `GET` | `/` | 健康状态、规则版本和服务元数据 |
+| `GET` | `/v1/public-key` | 返回客户端用于验签的云端公钥 |
 | `POST` | `/v1/challenges` | 签发一次性 challenge |
 | `POST` | `/v1/attest` | 验证证明并返回签名裁决 |
 
-请求体上限为 1 MiB，响应设置 `no-store`。生产环境不应记录请求正文，因为证明中包含证书和设备元数据。
+请求体上限为 1 MiB，响应使用 `no-store` 和 `nosniff` 等安全头。请求正文包含证书和设备元数据，生产日志不应记录正文。
+
+## 规则状态
+
+| 状态 | 服务端含义 |
+| --- | --- |
+| `CLEAN` | 规则完成且没有发现该规则定义的异常 |
+| `DETECTED` | 规则完成并发现满足条件的证据 |
+| `WARNING` | 有线索但强度或来源不足以给出异常结论 |
+| `UNAVAILABLE` | 数据源、策略、解析、网络或服务能力不足 |
+
+当前公开规则集版本为 **13**。规则必须可解释、可复核，并在未知设备、数据缺失或策略未配置时保持保守状态。
 
 ## 技术栈与目录
 
 - TypeScript、Cloudflare Workers、Wrangler
-- Durable Objects：一次性 challenge
-- D1：Keybox/吊销数据与设备目录、策略和观测聚合
-- Queues：可信观测的异步聚合
-- Cron Triggers：维护任务
+- Durable Objects：challenge 生命周期和单次消费
+- D1：Keybox/吊销数据、设备目录和策略
+- Queues 与 Cron Triggers：观测聚合和维护任务
 - Vitest 与 Python `unittest`：规则、DER 解析和数据生成器测试
 
-| 路径 | 内容 |
-| --- | --- |
-| `src/` | Worker、证明验证、裁决和规则实现 |
-| `test/` | TypeScript 与 Python 测试 |
-| `migrations/` | Keybox/吊销 D1 迁移 |
-| `catalog-migrations/` | 设备目录、策略和观测 D1 迁移 |
-| `scripts/` | Keybox、目录、候选基线与公开数据处理工具 |
-| `data/` | 仅提交示例或已审核的非敏感输入；真实导出默认被忽略 |
+```text
+cloud/
+├─ src/                 # Worker、证明验证、裁决和规则
+├─ test/                # TypeScript 与 Python 测试
+├─ migrations/          # Keybox/吊销 D1 迁移
+├─ catalog-migrations/  # 设备目录、策略和观测迁移
+├─ scripts/             # Keybox、目录、候选基线和公开数据工具
+└─ data/                # 示例或已审核的非敏感输入
+```
 
 ## 本地开发
 
-需要 Node.js LTS、pnpm 11 和 Python 3.10+。
+需要 Node.js LTS、pnpm 11 和 Python 3.10+：
 
 ```bash
-git clone --recurse-submodules https://github.com/LingQingBigKing/TrustAttestor.git
 cd TrustAttestor/cloud
 corepack enable
 pnpm install
 pnpm run check
-pnpm run deploy:dry-run
 ```
 
 常用命令：
@@ -88,15 +80,16 @@ pnpm run dev
 pnpm run typecheck
 pnpm run test
 pnpm run generate-types
+pnpm run deploy:dry-run
 ```
 
-`pnpm run check` 会检查 Wrangler bindings、TypeScript、Vitest 和所有 Python 数据生成器测试。
+`pnpm run check` 会检查 Wrangler bindings、TypeScript、Vitest 以及 baseline、candidate、国内设备目录和公开来源聚合测试。
 
-## Cloudflare 配置
+## 部署与 Secrets
 
-`wrangler.jsonc` 声明两个 D1 数据库、一个 Durable Object、观测队列、死信队列和定时任务。部署前在自己的 Cloudflare 账号中创建对应资源并替换数据库 ID、域名与公开配置。
+`wrangler.jsonc` 定义 Worker、Durable Object、两个 D1、观测 Queue、死信 Queue 和 Cron。部署前在自己的 Cloudflare 账号创建资源，并替换数据库 ID、域名、应用包名和规则变量。
 
-必须通过 Wrangler Secret 配置：
+Cloudflare Secrets 应通过 Wrangler 设置，而不是写入 `wrangler.jsonc` 或 Git。Workers 官方文档也要求使用 CLI 管理 Secrets，而不是把密钥放入配置文件（见 [Cloudflare Secrets 文档](https://developers.cloudflare.com/workers/configuration/secrets/)）。
 
 ```bash
 wrangler secret put VERDICT_PRIVATE_KEY
@@ -105,14 +98,10 @@ wrangler secret put TRUSTED_SIGNER_DIGESTS
 ```
 
 - `VERDICT_PRIVATE_KEY`：签署云端裁决的 P-256 私钥。
-- `OBSERVATION_NETWORK_KEY`：对网络来源做不可逆分组的服务端密钥。
-- `TRUSTED_SIGNER_DIGESTS`：受信客户端发布签名摘要；多个轮换状态用 `;` 分隔，同一状态的并行签名用 `,` 分隔。
+- `OBSERVATION_NETWORK_KEY`：对观测来源做不可逆分组的服务端密钥。
+- `TRUSTED_SIGNER_DIGESTS`：受信客户端发布签名摘要，支持轮换值。
 
-将 `wrangler.jsonc` 中的数据库 ID、域名和应用包名替换为自己的部署值后再发布。缺少或格式错误的签名摘要会让应用来源检测返回 `UNAVAILABLE`，不会默认放行。
-
-本地开发可使用被 `.gitignore` 排除的 `.dev.vars`。不要提交任何真实值。
-
-首次部署或数据库结构更新时，先审核再应用迁移：
+本地开发可使用被 `.gitignore` 排除的 `.dev.vars`，但不得放入生产值。迁移和代码发布应分开审核：
 
 ```bash
 wrangler d1 migrations apply trustattestor-keybox-blacklist --remote
@@ -121,22 +110,18 @@ pnpm run deploy:dry-run
 pnpm run deploy
 ```
 
-代码部署与生产 D1 数据变更是独立操作；自动部署不能替代迁移审查。
+D1 migration 文件应按 Cloudflare 的迁移流程审查后应用；代码部署成功不代表数据库迁移已经完成（参见 [D1 migrations 文档](https://developers.cloudflare.com/d1/reference/migrations/)）。
 
-## Keybox 黑名单维护
+## Keybox 与目录数据
 
-提取工具只读取证书 PEM，不输出或复制 Keybox 私钥。推荐先生成特征并审核 SQL：
+Keybox 工具只读取授权的证书 PEM，提取叶证书特征，不应输出或复制 Keybox 私钥。导入前必须审核来源、叶证书选择、证书 SHA-256、issuer SPKI 和 SQL：
 
 ```bash
 bash scripts/extract-keybox-serials.sh --features path/to/keybox.xml > keybox-features.tsv
 pnpm blacklist:update -- --input keybox-features.tsv --source source-label --reason "confirmed leaked keybox" --sql-output review.sql
 ```
 
-确认来源、叶证书选择和强指纹后再由维护者应用。不要把真实 Keybox、私钥、生产 SQL 导出或更新回执提交到仓库。
-
-## 设备目录与观测数据
-
-目录和候选数据必须携带可复核来源。单台报告、仅用户态属性或未审核聚类不能直接升级为强异常基线。相关工具包括：
+设备目录、候选基线和观测聚合也必须有可复核来源。单台报告、未审核聚类或仅用户态字段不能直接升级为强异常基线。示例工具：
 
 ```bash
 pnpm run catalog:sql -- --help
@@ -145,16 +130,16 @@ pnpm run candidate:sql -- --help
 pnpm run sources:aggregate -- --help
 ```
 
-示例输入保存在 `data/*.example.*`；实际数据库快照、CSV/TSV/JSON 导出和生成 SQL 默认被忽略。
+真实 Keybox、生产 SQL、数据库快照、设备报告和更新回执不得提交到仓库。
 
-## 安全与隐私
+## 隐私与安全
 
 - 不记录 `/v1/attest` 请求正文、完整证书链或本地报告。
-- challenge 必须短期、单次消费并绑定包名、SDK 与规则版本。
-- Release 请求只返回裁决所需的有限信息；详细证据仅用于通过证明验证的 Debug 请求。
-- 新规则应优先失败为 `UNAVAILABLE` 或 `WARNING`，只有可重复、可解释且经过审核的证据才能返回 `DETECTED`。
-- 安全问题请使用 GitHub Security Advisory 私下报告，不要在公开 Issue 中发布私钥、Keybox 或真实设备报告。
+- challenge 必须短期、单次消费，并绑定包名、SDK 和规则版本。
+- 数据源、签名策略或解析能力缺失时返回 `UNAVAILABLE`，不默认放行，也不默认判异常。
+- 不要提交 Cloudflare 私钥、`.dev.vars`、真实 Keybox、生产数据导出或个人数据。
+- 安全问题请通过 GitHub Security Advisory 私下报告。
 
 ## 许可证
 
-项目以 [MIT License](../LICENSE) 开源。
+项目自有代码以 [MIT License](../LICENSE) 开源；Cloudflare Workers、Wrangler 和其他第三方依赖继续遵循各自许可证。
