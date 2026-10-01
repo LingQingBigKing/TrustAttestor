@@ -1,0 +1,59 @@
+#!/bin/sh
+# Refuse to push generated build output or local signing/configuration files.
+# The build itself is configured to write to D:/LingQing/TrustAttestor-build.
+
+set -eu
+
+zero_oid='0000000000000000000000000000000000000000'
+found=0
+cr=$(printf '\r')
+
+is_forbidden_path() {
+    case "$1" in
+        build/*|*/build/*|.gradle/*|*/.gradle/*|.kotlin/*|*/.kotlin/*|.cxx/*|*/.cxx/*|outputs/*|*/outputs/*|intermediates/*|*/intermediates/*|artifacts/*|*/artifacts/*|.codex-build/*|*/.codex-build/*|.external-build/*|*/.external-build/*|classes.dex|*/classes.dex|*.apk|*.aab|*.apks|*.jks|*.keystore|*.p12|*.pfx|keystore.properties|*/keystore.properties|local.properties|*/local.properties|.env|*/.env|.env.*|*/.env.*|.dev.vars|*/.dev.vars|.dev.vars.*|*/.dev.vars.*)
+            return 0
+            ;;
+    esac
+    return 1
+}
+
+while read -r local_ref local_oid remote_ref remote_oid; do
+    # Git for Windows may feed CRLF to a POSIX hook.
+    local_ref=${local_ref%$cr}
+    local_oid=${local_oid%$cr}
+    remote_ref=${remote_ref%$cr}
+    remote_oid=${remote_oid%$cr}
+    [ -n "${local_ref:-}" ] || continue
+
+    # A deleted branch/tag has no new objects to inspect.
+    [ "$local_oid" = "$zero_oid" ] && continue
+
+    if [ "$remote_oid" = "$zero_oid" ]; then
+        commits=$(git rev-list "$local_oid")
+    else
+        commits=$(git rev-list "$local_oid" --not "$remote_oid")
+    fi
+
+    for commit in $commits; do
+        paths=$(git diff-tree --root --no-commit-id --name-only -r -m "$commit")
+        bad_paths=$(printf '%s\n' "$paths" | while IFS= read -r path; do
+            if is_forbidden_path "$path"; then
+                printf '%s\n' "$path"
+            fi
+        done)
+        if [ -n "$bad_paths" ]; then
+            if [ "$found" -eq 0 ]; then
+                echo "Push blocked: generated or private files are present in the commits being pushed." >&2
+                echo "Build outside the repository (D:/LingQing/TrustAttestor-build) and remove these paths from the commits:" >&2
+            fi
+            found=1
+            printf '%s\n' "$bad_paths" >&2
+        fi
+    done
+done
+
+if [ "$found" -ne 0 ]; then
+    exit 1
+fi
+
+exit 0

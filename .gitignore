@@ -6,6 +6,9 @@
 **/.idea/
 **/build/
 **/.cxx/
+**/outputs/
+**/intermediates/
+**/artifacts/
 **/local.properties
 **/keystore.properties
 **/.pnpm-store/
@@ -21,6 +24,10 @@
 
 # Generated DEX, mappings and local logs
 **/classes.dex
+**/*.apk
+**/*.aab
+**/*.apks
+**/*.dex
 **/mappings/
 **/skidfuscator*.log
 **/skidfuscator-error-*.txt
