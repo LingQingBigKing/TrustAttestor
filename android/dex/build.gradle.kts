@@ -188,10 +188,10 @@ afterEvaluate {
         "outputs/embedded-dex/${variantName}/classes.dex"
     )
     val runtimeClasspath = configurations.getByName("${variantName}RuntimeClasspath")
-    val stubJar = rootProject.layout.projectDirectory.file(
-        "stub/build/intermediates/compile_library_classes_jar/${variantName}/" +
+    val stubJar = project(":stub").layout.buildDirectory.file(
+        "intermediates/compile_library_classes_jar/${variantName}/" +
             "bundleLibCompileToJar${variantCapped}/classes.jar"
-    )
+    ).get()
     val packageProjectClasses = tasks.register<Jar>("packageEmbedded${variantCapped}Classes") {
         group = "build"
         description = "Packages compiled classes for the embedded R8 payload."

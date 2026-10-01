@@ -88,7 +88,6 @@ android {
     fun getSignerSha256(signConfig: ApkSigningConfig): String {
         val ks = KeyStore.getInstance("JKS")
         return FileInputStream(signConfig.storeFile!!).use {
-            println("use keystore file ${signConfig.storeFile}")
             ks.load(it, signConfig.storePassword?.toCharArray())
             val certificate = requireNotNull(ks.getCertificate(signConfig.keyAlias)) {
                 "missing signing certificate for alias ${signConfig.keyAlias}"
@@ -169,15 +168,23 @@ android {
             type.externalNativeBuild.cmake {
                 val signerSha256 = getSignerSha256(type.signingConfig!!)
                 val name = type.name
+                // The embedded DEX is consumed by CMake during configuration.
+                // Resolve it from the explicitly supplied external build root so
+                // the native configure step cannot fall back to <module>/build.
+                val externalBuildRoot = providers.gradleProperty("trustAttestorBuildRoot")
+                    .orNull
+                    ?.let(::File)
+                val dexBuildDirectory = externalBuildRoot
+                    ?.resolve("android/dex")
+                    ?: project(":dex").layout.buildDirectory.get().asFile
                 val dexFile = if (name == "release") {
-                    rootProject.file(
-                        "dex/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex"
+                    dexBuildDirectory.resolve(
+                        "intermediates/dex/release/minifyReleaseWithR8/classes.dex"
                     )
                 } else {
-                    rootProject.file("dex/build/outputs/embedded-dex/$name/classes.dex")
+                    dexBuildDirectory.resolve("outputs/embedded-dex/$name/classes.dex")
                 }
-                val dexPath = dexFile.absolutePath
-                println("signerSha256=$signerSha256 type=$name dexPath=$dexPath")
+                println("Configured embedded DEX for $name")
                 arguments += "-DAPP_SIGNER_SHA256=$signerSha256"
                 arguments += "-DDEX_PATH=${dexFile.absolutePath.replace("\\", "/")}"
             }
