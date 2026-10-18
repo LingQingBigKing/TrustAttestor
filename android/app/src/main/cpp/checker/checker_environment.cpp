@@ -64,10 +64,21 @@ using namespace std::string_view_literals;
 constexpr auto kSymbolANetwork = "_ZN7android15ANetworkSession10threadLoopEv";
 
 RINLINE std::string GetPropValue(const char* key) {
-    std::array<char, PROP_VALUE_MAX> buf{};
-    auto len = __system_property_get(key, buf.data());
-    if (len <= 0) return {};
-    return {buf.data(), static_cast<size_t>(len)};
+    // 同 checker_cloud.cpp 的 ReadProperty：legacy __system_property_get() 遇到值长度
+    // >= PROP_VALUE_MAX（92）只会返回哨兵串，Build.FINGERPRINT 这种 96 字符的长属性
+    // 就读不到真值。改成 callback 读，长度不再受限。
+    const prop_info* info = __system_property_find(key);
+    if (info == nullptr) return {};
+    std::string value;
+    __system_property_read_callback(
+        info,
+        [](void* cookie, const char* /*name*/, const char* prop_value, uint32_t /*serial*/) {
+            if (prop_value != nullptr) {
+                *static_cast<std::string*>(cookie) = prop_value;
+            }
+        },
+        &value);
+    return value;
 }
 
 RINLINE bool PropNotEmpty(const char* key) {

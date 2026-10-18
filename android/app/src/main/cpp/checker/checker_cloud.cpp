@@ -152,10 +152,22 @@ std::string JsonStringOrNull(std::string_view value) {
 }
 
 std::string ReadProperty(const char* key) {
-    std::array<char, PROP_VALUE_MAX> value{};
-    const int length = __system_property_get(key, value.data());
-    if (length <= 0) return {};
-    return {value.data(), static_cast<size_t>(length)};
+    // 值长度达到 PROP_VALUE_MAX（92 字节）时，legacy 的 __system_property_get() 只会
+    // 返回一句 "Must use __system_property_read_callback() to read"，于是像
+    // Build.FINGERPRINT 这种 96 字符的长属性读出来就是那句哨兵串 —— 云端再按三段式切
+    // 自然切不开，报"结构不符合规范"。改用 callback 读，长度不再受限。
+    const prop_info* info = __system_property_find(key);
+    if (info == nullptr) return {};
+    std::string value;
+    __system_property_read_callback(
+        info,
+        [](void* cookie, const char* /*name*/, const char* prop_value, uint32_t /*serial*/) {
+            if (prop_value != nullptr) {
+                *static_cast<std::string*>(cookie) = prop_value;
+            }
+        },
+        &value);
+    return value;
 }
 
 std::string FirstProperty(std::initializer_list<const char*> keys) {
